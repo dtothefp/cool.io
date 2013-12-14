@@ -1,6 +1,6 @@
 ###WDI-HW Submission
 
-######Descriton
+######Description
 
 - Cool.io is a way to visualize a user's past Facebook interaction in order to give them an overall ranking related to their posts, and how much their friends interact with their posts/profile.  Users can invite friends to play the game with them and compete for who is the master of Facebook profile interaction.
 
