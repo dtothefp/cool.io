@@ -1,0 +1,2 @@
+class Authenticated < User
+end

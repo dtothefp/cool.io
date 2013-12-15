@@ -1,0 +1,36 @@
+jQuery(function() {
+ $('body').prepend('<div id="fb-root"></div>');
+
+ (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId: '<%= ENV["FACEBOOK_KEY_COOL_IO"] %>',
+      cookie: true
+    });
+    $('#sign_in').click(function(e) {
+      e.preventDefault();
+      console.log("clicked");
+      FB.login(function(response) {
+        resp = response;
+        console.log("fblogin");
+        if (response.authResponse) {
+          // window.location = '/auth/facebook/callback';
+        }
+      }, {scope: 'read_stream,user_photos,friends_likes'} );
+    });
+    $('#sign_out').click(function(e) {
+      FB.getLoginStatus(function(response) {
+        if (response.authResponse) {
+          FB.logout();
+        }
+      });
+    });
+  }
+});

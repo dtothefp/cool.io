@@ -16,5 +16,11 @@
 
 ![image](https://lh5.googleusercontent.com/-AcK6eAYiJF8/Uqy2rIgvE3I/AAAAAAAABNo/ng5clqvDF58/w783-h554-no/IMG_20131214_144445407.jpg)
 
+######INSPIRATION
+
+![image](http://blogs.villagevoice.com/music/images/Coolio-575-old.jpg)
+
+
+
 
 
