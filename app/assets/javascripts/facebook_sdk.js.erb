@@ -12,18 +12,23 @@ jQuery(function() {
   window.fbAsyncInit = function() {
     FB.init({
       appId: '<%= ENV["FACEBOOK_KEY_COOL_IO"] %>',
+      status     : true,
+      frictionlessRequests : true,
       cookie: true
     });
     $('#sign_in').click(function(e) {
       e.preventDefault();
-      console.log("clicked");
       FB.login(function(response) {
-        resp = response;
-        console.log("fblogin");
         if (response.authResponse) {
-          // window.location = '/auth/facebook/callback';
+          console.log(response.authResponse);
+          var new_user = new CoolioApp.Models.User({oauth_expires_at: response.authResponse.expiresIn, ouath_token: response.authResponse.accessToken});
+          FB.api('/me', function(response) {
+            console.log("api response", response);
+            new_user.set({name: response.name, email: response.email, fb_id: response.id});
+            usersCollection.create(new_user.toJSON());
+          });
         }
-      }, {scope: 'read_stream,user_photos,friends_likes'} );
+      }, {scope: 'email,read_stream,user_photos,friends_likes'} );
     });
     $('#sign_out').click(function(e) {
       FB.getLoginStatus(function(response) {

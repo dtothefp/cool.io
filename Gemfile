@@ -13,6 +13,7 @@ gem 'httparty', '~> 0.12.0'
 gem "bootstrap-sass", github: "thomas-mcdonald/bootstrap-sass", branch: "3"
 gem 'rails_12factor', group: :production
 gem 'omniauth-facebook'
+gem "rails-erd"
 
 group :doc do
   gem 'sdoc', require: false
@@ -22,6 +23,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "pry-rails"
   gem "factory_girl_rails"
+  gem 'ffaker'
   gem "jasmine-core", github: "pivotal/jasmine"
   gem "jasmine", github: "pivotal/jasmine-gem"
 end
@@ -30,6 +32,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "launchy"
+  gem 'shoulda-matchers'
 end
 
 group :development do

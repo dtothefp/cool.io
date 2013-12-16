@@ -16,8 +16,13 @@
 //= require facebook_sdk
 //= require underscore
 //= require backbone
+//= require main
 //= require_tree ./backbone/models
 //= require_tree ./backbone/collections
 //= require_tree ./backbone/templates
 //= require_tree ./backbone/views
 //= require_tree ./backbone/routers
+
+usersCollection = new CoolioApp.Collections.Users();
+new CoolioApp.Router();
+Backbone.history.start();

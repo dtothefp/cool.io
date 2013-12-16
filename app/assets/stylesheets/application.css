@@ -11,3 +11,14 @@
  *= require_self
  *= require_tree .
  */
+
+ #sign_in {
+  background: url('http://www.videoaround.com/images/facebook-login-button.png') no-repeat center center;
+  height: 50px;
+  display: block;
+  width: 250px;
+ }
+
+  #sign_in:hover {
+    cursor:pointer;
+  }

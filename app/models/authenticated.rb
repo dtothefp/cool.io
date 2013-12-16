@@ -1,2 +1,3 @@
 class Authenticated < User
+  
 end
