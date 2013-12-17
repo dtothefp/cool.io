@@ -19,6 +19,21 @@
   width: 250px;
  }
 
-  #sign_in:hover {
-    cursor:pointer;
-  }
+#sign_in:hover {
+  cursor:pointer;
+}
+
+#sign_out {
+background: url('https://save.ca/img/logout_FB.png') no-repeat center center;
+height: 50px;
+display: block;
+width: 250px;
+}
+
+#sign_out:hover {
+  cursor:pointer;
+}
+
+
+
+

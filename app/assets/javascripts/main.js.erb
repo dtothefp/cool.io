@@ -1,0 +1,46 @@
+// NAMESPACE THE APP
+var CoolioApp = {
+  Models:       {}, 
+  Collections:  {},
+  Views:        {},
+  Router:       null,
+  initialize:   function() {
+   
+  }, 
+  checkAuthentication: function() {
+    FB.getLoginStatus(function(response) {
+      if (response.status === 'connected') {
+        console.log(response);
+        Backbone.history.navigate("authenticated", {trigger: true});
+      } else if (response.status === 'not_authorized') {
+        Backbone.history.navigate("login", {trigger: true});
+      } else {
+        Backbone.history.navigate("login", {trigger: true});
+      }
+    });
+  }
+}
+
+
+// ASYNCHRONOUSLY LOAD THE FACEBOOK SDK
+jQuery(function() {
+ $('body').prepend('<div id="fb-root"></div>');
+
+ (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId: '<%= ENV["FACEBOOK_KEY_COOL_IO"] %>',
+      status     : true,
+      frictionlessRequests : true,
+      cookie: true
+    });
+    CoolioApp.checkAuthentication();
+  }
+});

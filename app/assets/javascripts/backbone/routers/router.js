@@ -1,6 +1,8 @@
 CoolioApp.Router = Backbone.Router.extend({
   routes: {
-    "login": "login"
+    "login": "login",
+    "authenticated": "displayLogout",
+    "friends": "getFriends"
   },
 
   initialize: function() {
@@ -8,11 +10,13 @@ CoolioApp.Router = Backbone.Router.extend({
   },
 
   login: function() {
-    console.log("loginfunction");
-    FB.api('/me', function(response) {
-      console.log("api response", response);
-      user = new UserModel({name: response.name, email: response.email, fb_id: response.id});
-    });
+   this.loadView( new CoolioApp.Views.Login() );
+  },
+
+  displayLogout: function() {
+   // CREATE A VIEW FOR CREATING/GETTING FRIENDS 
+   new CoolioApp.Views.GetFriends();
+   this.loadView( new CoolioApp.Views.Logout() );
   },
 
   loadView: function(view) {

@@ -1,41 +1,49 @@
-jQuery(function() {
- $('body').prepend('<div id="fb-root"></div>');
+// jQuery(function() {
+//  $('body').prepend('<div id="fb-root"></div>');
 
- (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
+//  (function(d, s, id) {
+//     var js, fjs = d.getElementsByTagName(s)[0];
+//     if (d.getElementById(id)) return;
+//     js = d.createElement(s); js.id = id;
+//     js.src = "//connect.facebook.net/en_US/all.js";
+//     fjs.parentNode.insertBefore(js, fjs);
+//   }(document, 'script', 'facebook-jssdk'));
 
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId: '<%= ENV["FACEBOOK_KEY_COOL_IO"] %>',
-      status     : true,
-      frictionlessRequests : true,
-      cookie: true
-    });
-    $('#sign_in').click(function(e) {
-      e.preventDefault();
-      FB.login(function(response) {
-        if (response.authResponse) {
-          console.log(response.authResponse);
-          var new_user = new CoolioApp.Models.User({oauth_expires_at: response.authResponse.expiresIn, ouath_token: response.authResponse.accessToken});
-          FB.api('/me', function(response) {
-            console.log("api response", response);
-            new_user.set({name: response.name, email: response.email, fb_id: response.id});
-            usersCollection.create(new_user.toJSON());
-          });
-        }
-      }, {scope: 'email,read_stream,user_photos,friends_likes'} );
-    });
-    $('#sign_out').click(function(e) {
-      FB.getLoginStatus(function(response) {
-        if (response.authResponse) {
-          FB.logout();
-        }
-      });
-    });
-  }
-});
+//   window.fbAsyncInit = function() {
+//     FB.init({
+//       appId: '<%= ENV["FACEBOOK_KEY_COOL_IO"] %>',
+//       status     : true,
+//       frictionlessRequests : true,
+//       cookie: true
+//     });
+//     FB.getLoginStatus(function(response) {
+//       if (response.status === 'connected') {
+//         // the user is logged in and has authenticated your
+//         // app, and response.authResponse supplies
+//         // the user's ID, a valid access token, a signed
+//         // request, and the time the access token 
+//         // and signed request each expire
+//         console.log("already logged in", response.authResponse.userID);
+//         console.log("already logged in", response.authResponse.accessToken);
+//         console.log("response");
+//         new CoolioApp.Views.Logout();
+//         // display user info or get it from the DB
+//       } else if (response.status === 'not_authorized') {
+//         new CoolioApp.Views.Login();
+//       } else {
+//         new CoolioApp.Views.Login();
+//       }
+//     });
+//     // $('#sign_in').click(function(e) {
+//     //   e.preventDefault();
+//     //   new CoolioApp.Views.Login();
+//     // });
+//     // $('#sign_out').click(function(e) {
+//     //   FB.getLoginStatus(function(response) {
+//     //     if (response.authResponse) {
+//     //       FB.logout();
+//     //     }
+//     //   });
+//     // });
+//   }
+// });
