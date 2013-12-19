@@ -23,6 +23,9 @@
 //= require_tree ./backbone/views
 //= require_tree ./backbone/routers
 
-usersCollection = new CoolioApp.Collections.Users();
+
+//CoolioApp.usersCollection = new CoolioApp.Collections.Users();
+CoolioApp.currentUserModel = new CoolioApp.Models.User();
+CoolioApp.Session = new CoolioApp.Models.Session();
 new CoolioApp.Router();
 Backbone.history.start();

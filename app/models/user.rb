@@ -1,4 +1,3 @@
-require 'pry'
 class User < ActiveRecord::Base
   validates :name, presence: true
   validates :fb_id, presence: true, uniqueness: true
@@ -21,8 +20,8 @@ class User < ActiveRecord::Base
   #   end
   # end
 
-  def self.authenticated? fb_id
-    User.find_by(fb_id: fb_id, type: "Authenticated") ? true : false
+  def authenticated? 
+    self.type == "Authenticated"
   end
 
   def self.token_expired? fb_id, token

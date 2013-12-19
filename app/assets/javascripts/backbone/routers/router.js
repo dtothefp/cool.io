@@ -1,8 +1,8 @@
 CoolioApp.Router = Backbone.Router.extend({
   routes: {
-    "login": "login",
-    "authenticated": "displayLogout",
-    "friends": "getFriends"
+    "welcome": "login",
+    "user/:id": "displayUserDetails",
+    "user/:id/friendships": "displayFriends"
   },
 
   initialize: function() {
@@ -10,13 +10,29 @@ CoolioApp.Router = Backbone.Router.extend({
   },
 
   login: function() {
-   this.loadView( new CoolioApp.Views.Login() );
+   // this.loadNavView( new CoolioApp.Views.Login() );
+   // TODO FIGURE OUT HOW TO PASS THE SESSION INTO THE VIEW
+   console.log("LOGIN FUNCTION IN ROUTER", CoolioApp.Session);
+   this.loadView( new CoolioApp.Views.Hello() );
+   this.loadNavView( new CoolioApp.Views.NewSession({model: CoolioApp.currentUserModel, session: CoolioApp.Session}) );
   },
 
-  displayLogout: function() {
-   // CREATE A VIEW FOR CREATING/GETTING FRIENDS 
-   new CoolioApp.Views.GetFriends();
-   this.loadView( new CoolioApp.Views.Logout() );
+  displayUserDetails: function(fbID) {
+   this.loadNavView( new CoolioApp.Views.Logout() );
+   // // CREATE A VIEW FOR DISPLAYING USER DATA AND GETTING FRIENDS 
+   this.loadView( new CoolioApp.Views.User({model: CoolioApp.currentUserModel}) );
+  },
+
+  displayFriends: function(opts) {
+    console.log("friends clicked", opts);
+    CoolioApp.Friendships = new CoolioApp.Collections.Friendships
+    this.loadView(new CoolioApp.Views.FriendsList({collection: CoolioApp.Friendships}));
+  },
+
+  loadNavView: function(view) {
+    this.mainNav && this.mainNav.remove();
+    this.mainNav = view;
+    $("nav").append(view.el);
   },
 
   loadView: function(view) {

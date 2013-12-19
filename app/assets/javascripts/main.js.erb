@@ -7,20 +7,25 @@ var CoolioApp = {
   initialize:   function() {
    
   }, 
-  checkAuthentication: function() {
+  checkLoginStatus: function() {
+    
     FB.getLoginStatus(function(response) {
+      console.log("CHECK FACEBOOK LOGIN STATUS");
       if (response.status === 'connected') {
-        console.log(response);
-        Backbone.history.navigate("authenticated", {trigger: true});
+        console.log("CONNECTED");
+        CoolioApp.currentUserModel.set( {id: response.authResponse.userID} );
+        CoolioApp.currentUserModel.fetch();
+        Backbone.history.navigate("user/" + response.authResponse.userID, {trigger: true});
       } else if (response.status === 'not_authorized') {
-        Backbone.history.navigate("login", {trigger: true});
+        console.log("LOGGED INTO FB BUT NOT AUTHORIZED ON APP");
+        Backbone.history.navigate("welcome", {trigger: true});
       } else {
-        Backbone.history.navigate("login", {trigger: true});
+        console.log("NOT LOGGED IN");
+        Backbone.history.navigate("welcome", {trigger: true});
       }
     });
   }
 }
-
 
 // ASYNCHRONOUSLY LOAD THE FACEBOOK SDK
 jQuery(function() {
@@ -41,6 +46,7 @@ jQuery(function() {
       frictionlessRequests : true,
       cookie: true
     });
-    CoolioApp.checkAuthentication();
+    console.log("APP INITIALIZED");
+    CoolioApp.checkLoginStatus();
   }
 });

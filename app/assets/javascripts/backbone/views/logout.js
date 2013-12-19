@@ -2,6 +2,7 @@ CoolioApp.Views.Logout = Backbone.View.extend({
   id: "sign_out",
 
   initialize: function() {
+    console.log("instantiate logout view");
   },
 
   events: {
@@ -10,7 +11,8 @@ CoolioApp.Views.Logout = Backbone.View.extend({
 
   logoutFB: function() {
     FB.logout(function(response) {
-      CoolioApp.checkAuthentication();
+      location.reload();
+      // CoolioApp.checkAuthentication();
     });
   }
 

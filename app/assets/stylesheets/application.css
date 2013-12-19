@@ -12,14 +12,21 @@
  *= require_tree .
  */
 
- #sign_in {
+#sign_in {
   background: url('http://www.videoaround.com/images/facebook-login-button.png') no-repeat center center;
   height: 50px;
   display: block;
   width: 250px;
- }
+}
 
-#sign_in:hover {
+#sign_up {
+  background: url('http://inspiration.entrepreneur.com/img/signup-facebook-button.png') no-repeat center center;
+  height: 50px;
+  display: block;
+  width: 250px;
+}
+
+#sign_in:hover, #sign_up:hover, #sign_out:hover {
   cursor:pointer;
 }
 
@@ -30,9 +37,22 @@ display: block;
 width: 250px;
 }
 
-#sign_out:hover {
-  cursor:pointer;
+.friends-list ul {
+  margin: 0;
+  box-sizing: border-box;
+  padding: 15px;
+  width: 20%;
+  float: left;
+  -moz-box-shadow:    inset 0 0 10px #000000;
+   -webkit-box-shadow: inset 0 0 10px #000000;
+   box-shadow:         inset 0 0 10px #000000;
 }
+
+.friends-list li {
+  text-align: center;
+  list-style: none;
+}
+
 
 
 

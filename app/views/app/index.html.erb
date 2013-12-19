@@ -1,6 +1,22 @@
-<script type="text/html" id="find-friends">
+<script type="text/html" id="user-details">
+  <h1>Welcome  <%%= this.model.get("name") %></h1>
   <form>
     <button>Find Your Friends</button>
   </form>
+</script>
+
+<script type="text/html" id="new-session">
+  <div id="sign_up"></div>
+  <div id="sign_in"></div>
+</script>
+
+
+<script type="text/html" id="say-hello">
+  <h1>HELLLOOOOOO!!!!!!!!!</h1>
+</script>
+
+
+<script type="text/html" id="friends-html">
+    <li><%%= this.model.get("name") %></li>
 </script>
 

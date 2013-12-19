@@ -1,3 +1,3 @@
-CoolioApp.Models.Friend  = Backbone.Model.extend({
+CoolioApp.Models.Friend = Backbone.Model.extend({
   
 });

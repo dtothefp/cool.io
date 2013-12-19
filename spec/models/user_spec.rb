@@ -6,6 +6,7 @@ describe User do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:fb_id) }
     it { should validate_uniqueness_of(:fb_id) }
+    it { should have_many(:friends) }
   end
 
   describe "#user_exists?" do
@@ -32,9 +33,10 @@ describe User do
         FactoryGirl.create(:authenticated, name: "David", fb_id: "1")
         user.name = "David"
         user.fb_id = "1"
+        user.type = "Authenticated"
       end
       it "the user authentication was previously persisted" do
-        expect(User.authenticated? "1").to be_true
+        expect(user.authenticated?).to be_true
       end
     end
   end
@@ -52,4 +54,5 @@ describe User do
       end
     end
   end
+
 end

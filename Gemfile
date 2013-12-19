@@ -41,7 +41,6 @@ group :development do
   gem "binding_of_caller"
   gem "meta_request"
   gem "rails-erd"
-  gem "better_errors"
   gem "terminal-notifier-guard"
   gem "awesome_print"
 end

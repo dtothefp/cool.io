@@ -3,8 +3,6 @@ CoolIo::Application.routes.draw do
 
  resources :sessions
  resources :users do
-  collection do
-    post 'friends'
-  end
+  resources :friendships
  end
 end

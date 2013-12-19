@@ -9,10 +9,13 @@ class SessionsController < ApplicationController
   # # end
 
  def create
-   @user = User.find_by(fb_id: params[:fb_id])
+   @user = User.find_by(fb_id: params[:session_id])
    session[:user_id] = @user.id
+   render json: {session_id: @user.id}
+ end
 
-   render json: @user.fb_id
+ def update
+   binding.pry
  end
 
 end
