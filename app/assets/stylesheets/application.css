@@ -30,7 +30,6 @@ div#hello {
   text-align: center;
   height: 500px;
   width: 50%;
-  opacity: .5;
   display: block;
   position: relative;
   left: 50px;
@@ -48,6 +47,13 @@ div#hello::after {
   right: 0;
   position: absolute;
   z-index: -1;   
+}
+
+div#hello h1 {
+  font-weight: bold !important;
+  background: rgba(255, 255, 255, .4);
+  position: relative;
+  top: 40px;
 }
 
 #sign_up {
