@@ -1,26 +1,18 @@
 GIT
   remote: git://github.com/pivotal/jasmine-gem.git
-  revision: 7947895a2515d5b5344892580338677dd43638fe
+  revision: cd7f4a23919e154a5d7aef47af71e636af197b95
   specs:
-    jasmine (2.0.0.rc5)
-      jasmine-core (~> 2.0.0.rc5)
+    jasmine (2.0.0)
+      jasmine-core (~> 2.0.0)
       phantomjs
       rack (>= 1.2.1)
       rake
 
 GIT
   remote: git://github.com/pivotal/jasmine.git
-  revision: f9191d7b0da68113b415aca3bb65553ce7684c5e
+  revision: 8510bdd947dcc7b8d46fc05a7db7dfb3dbb58eca
   specs:
-    jasmine-core (2.0.0.rc5)
-
-GIT
-  remote: git://github.com/thomas-mcdonald/bootstrap-sass.git
-  revision: 9c6c07f74ff515cf38380b014cfede14a4f0eae4
-  branch: 3
-  specs:
-    bootstrap-sass (3.0.0.0)
-      sass (~> 3.2)
+    jasmine-core (2.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -124,7 +116,7 @@ GEM
     multi_json (1.8.2)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
-    nokogiri (1.6.0)
+    nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     oauth2 (0.8.1)
       faraday (~> 0.8)
@@ -140,7 +132,7 @@ GEM
     omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
-    pg (0.17.0)
+    pg (0.17.1)
     phantomjs (1.9.2.1)
     polyglot (0.3.3)
     pry (0.9.12.4)
@@ -203,7 +195,7 @@ GEM
     sdoc (0.3.20)
       json (>= 1.1.3)
       rdoc (~> 3.10)
-    selenium-webdriver (2.38.0)
+    selenium-webdriver (2.39.0)
       childprocess (>= 0.2.5)
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
@@ -228,7 +220,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbolinks (2.0.0)
+    turbolinks (2.1.0)
       coffee-rails
     tzinfo (0.3.38)
     uglifier (2.3.3)
@@ -249,7 +241,6 @@ DEPENDENCIES
   backaid
   bcrypt-ruby (~> 3.0.0)
   binding_of_caller
-  bootstrap-sass!
   capybara
   coffee-rails (~> 4.0.0)
   factory_girl_rails

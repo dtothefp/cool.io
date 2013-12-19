@@ -4,6 +4,11 @@
 
 - Cool.io is a way to visualize a user's past Facebook interaction in order to give them an overall ranking related to their posts, and how much their friends interact with their posts/profile.  Users can invite friends to play the game with them and compete for who is the master of Facebook profile interaction.
 
+######Plans for the Future
+
+- Currently a user can sign-up/login with Facebook and can view all of their friends.  In the near future Cool.io would like to implement features for viewing friend interaction statistics and taking action based upon this information.
+
+
 ######User Stories
 
 - As a user I want to login through Facebook

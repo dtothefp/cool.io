@@ -10,7 +10,6 @@ gem 'jbuilder', '~> 1.2'
 gem 'backaid'
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'httparty', '~> 0.12.0'
-gem "bootstrap-sass", github: "thomas-mcdonald/bootstrap-sass", branch: "3"
 gem 'rails_12factor', group: :production
 gem 'omniauth-facebook'
 gem "rails-erd"
