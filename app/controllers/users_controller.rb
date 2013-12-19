@@ -61,7 +61,6 @@ class UsersController < ApplicationController
   end
 
   def set_oauth(user)
-    binding.pry
     token_arr = parse_token(params[:ouath_token])
     user.short_term_token = params[:ouath_token]
     user.oauth_expires_at = token_arr[1][0]

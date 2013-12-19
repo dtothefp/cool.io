@@ -20,8 +20,7 @@ class FriendshipsController < ApplicationController
   def add_friends(user)
     response = JSON.parse HTTParty.get "https://graph.facebook.com/" + user.fb_id + "/friends?access_token=" + user.oauth_token
     response["data"].each do |friend_data|
-      friend = User.create(name: friend_data["name"], fb_id: friend_data["id"])
-      user.friends << friend
+      user.friends << User.new(name: friend_data["name"], fb_id: friend_data["id"])
     end
   end
 

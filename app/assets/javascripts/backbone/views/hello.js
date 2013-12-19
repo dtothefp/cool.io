@@ -3,6 +3,11 @@ CoolioApp.Views.Hello = Backbone.View.extend({
 
   template: _.template($("script#say-hello").html()),
 
+  events: {
+    "mouseenter": "cleanHumor",
+    "mouseleave": "dirtyHumor"
+  },
+
   initialize: function() {
     this.render();
   },
@@ -10,6 +15,16 @@ CoolioApp.Views.Hello = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template());
     console.log("RENDER WELCOME MESSAGE");
+  }, 
+
+  cleanHumor: function() {
+    console.log("toggle off humor");
+    $("#dirty").text("IND");
+  },
+
+  dirtyHumor: function() {
+    console.log("toggle off humor");
+    $("#dirty").text("$@%");
   }
 
 });

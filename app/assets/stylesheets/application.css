@@ -13,9 +13,20 @@
  *= require_tree .
  */
 
+ @font-face {
+        font-family:"brushed";
+        src:url("/assets/brushed.ttf") format("truetype");
+        font-weight:normal;
+        font-style:normal;
+}
+
 body {
   background: url("http://backgroundhdwallpaper.com/wp-content/uploads/2013/03/Facebook-Logo-Background-HD-Wallpaper-1080x607.jpg") repeat-y top center;
   background-size: 130%;
+}
+
+.top-bar .name {
+  font-family: 'brushed';
 }
 
 
@@ -109,7 +120,7 @@ width: 250px;
 }
 
 #user form {
-  clear: both;e
+  clear: both;
 }
 
 #user img {
@@ -121,7 +132,21 @@ width: 250px;
   border-radius: 16px;
 }
 
+#clean {
+  display: none;
+}
 
+.name a {
+  font-family: 'Marmelad', sans-serif;
+}
+
+#logo {
+  font-size: 24px;
+}
+
+.title-area {
+  width: 500px!important;
+}
 
 
 
