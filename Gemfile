@@ -14,6 +14,7 @@ gem "bootstrap-sass", github: "thomas-mcdonald/bootstrap-sass", branch: "3"
 gem 'rails_12factor', group: :production
 gem 'omniauth-facebook'
 gem "rails-erd"
+gem 'zurb-foundation'
 
 group :doc do
   gem 'sdoc', require: false

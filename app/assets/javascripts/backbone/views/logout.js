@@ -1,12 +1,16 @@
 CoolioApp.Views.Logout = Backbone.View.extend({
-  id: "sign_out",
+  tagName: "ul",
+  className: "dropdown",
+
+  template: _.template($("script#logout-view").html()),
 
   initialize: function() {
     console.log("instantiate logout view");
+    this.render();
   },
 
   events: {
-    "click": "logoutFB"
+    "click li#sign_out": "logoutFB"
   },
 
   logoutFB: function() {
@@ -14,6 +18,10 @@ CoolioApp.Views.Logout = Backbone.View.extend({
       location.reload();
       // CoolioApp.checkAuthentication();
     });
+  },
+
+  render: function() {
+    this.$el.html(this.template());
   }
 
 });

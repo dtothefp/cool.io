@@ -14,7 +14,6 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
   },
 
   addOne: function(friend) {
-    console.log("add one function", friend);
     var view = new CoolioApp.Views.Friends({model: friend});
     this.$el.append(view.el);
   }

@@ -12,7 +12,6 @@ class UsersController < ApplicationController
       if @user.authenticated?
         render json: @user
       else
-        binding.pry
         set_oauth(@user)
         # add_friends(@user)
         if @user.update
@@ -24,7 +23,6 @@ class UsersController < ApplicationController
       end
 
     else
-      binding.pry
       @user.attributes = user_params.merge({type: "Authenticated"})
       set_oauth(@user)
       # add_friends(@user)
@@ -54,7 +52,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-      params.require(:user).permit(:name, :email, :fb_id, :oauth_expires_at)
+      params.require(:user).permit(:name, :email, :fb_id, :oauth_expires_at, :image_url)
   end
 
   def parse_token(token)
@@ -70,12 +68,13 @@ class UsersController < ApplicationController
     user.oauth_token = token_arr[0][0]
   end
 
-  def add_friends(user)
-    response = JSON.parse HTTParty.get "https://graph.facebook.com/" + user.fb_id + "/friends?access_token=" + user.oauth_token
-    response["data"].each do |friend_data|
-      friend = User.create(name: friend_data["name"], fb_id: friend_data["id"])
-      user.friends << friend
-    end
+  def add_pic(user)
+    response = JSON.parse (HTTParty.get "https://graph.facebook.com/" + user.fb_id + "?fields=friends.fields(picture)&access_token=" + user.oauth_token )
+      response["friends"]["data"].each do |data|
+        friend = User.find_by(fb_id: data["id"])   
+        friend.image_url = data["picture"]["data"]["url"] 
+        friend.save 
+      end  
   end
 
 end

@@ -1,9 +1,10 @@
 CoolioApp.Views.NewSession = Backbone.View.extend({
-  id: "session-placeholder",
+  tagName: "ul",
+  className: "dropdown",
 
   events: {
-    "click div#sign_up": "signUp",
-    "click div#sign_in": "login"
+    "click #sign_up": "signUp",
+    "click #sign_in": "login"
   },
 
   template: _.template($("script#new-session").html()),
@@ -25,9 +26,10 @@ CoolioApp.Views.NewSession = Backbone.View.extend({
         var ouath_token = response.authResponse.accessToken;
         var oauth_expires_at = response.authResponse.expiresIn;
         console.log("login response");
-        FB.api('/me', function(response) {
+        FB.api('/me?fields=id,name,picture,email', function(response) {
           // SET THE ADDITIONAL PERSONAL INFORMATION IN THE MODEL
-          var attr = {name: response.name, email: response.email, fb_id: response.id, oauth_expires_at: oauth_expires_at, ouath_token: ouath_token}
+          var attr = {name: response.name, email: response.email, fb_id: response.id, image_url: response.picture.data.url, oauth_expires_at: oauth_expires_at, ouath_token: ouath_token};
+          console.log("ATTRIBUTES IN SIGNUP", attr);
           self.model.save(attr, {
             success: function(newUserJSON) {
               console.log("new USER json callback", newUserJSON);

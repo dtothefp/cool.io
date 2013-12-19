@@ -12,6 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require modernizr.js
+//= require foundation
 //= require turbolinks
 //= require facebook_sdk
 //= require underscore
@@ -29,3 +31,4 @@ CoolioApp.currentUserModel = new CoolioApp.Models.User();
 CoolioApp.Session = new CoolioApp.Models.Session();
 new CoolioApp.Router();
 Backbone.history.start();
+

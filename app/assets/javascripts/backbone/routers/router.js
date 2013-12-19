@@ -32,7 +32,7 @@ CoolioApp.Router = Backbone.Router.extend({
   loadNavView: function(view) {
     this.mainNav && this.mainNav.remove();
     this.mainNav = view;
-    $("nav").append(view.el);
+    $("nav li.has-dropdown").append(view.el);
   },
 
   loadView: function(view) {

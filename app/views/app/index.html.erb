@@ -1,22 +1,30 @@
 <script type="text/html" id="user-details">
   <h1>Welcome  <%%= this.model.get("name") %></h1>
+  <img src="<%%= this.model.get("image_url") %>" alt="facebook profile image">
   <form>
     <button>Find Your Friends</button>
   </form>
 </script>
 
 <script type="text/html" id="new-session">
-  <div id="sign_up"></div>
-  <div id="sign_in"></div>
+  <li id="sign_up"></li>
+  <li id="sign_in"></li>
+</script>
+
+<script type="text/html" id="logout-view">
+  <li id="sign_out"></li>
 </script>
 
 
 <script type="text/html" id="say-hello">
-  <h1>HELLLOOOOOO!!!!!!!!!</h1>
+  <h1>NOT JUST ANOTHER APP FOR $%&^*###$!@ YOUR FRIENDS....YET</h1>
 </script>
 
 
 <script type="text/html" id="friends-html">
     <li><%%= this.model.get("name") %></li>
+    <li><img src="<%%= this.model.get("image_url") %>" alt="facebook profile image"></li>
 </script>
+
+
 
