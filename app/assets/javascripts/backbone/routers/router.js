@@ -3,7 +3,8 @@ CoolioApp.Router = Backbone.Router.extend({
     "welcome": "login",
     "user/:id": "displayUserDetails",
     "user/:id/friendships": "displayFriends",
-    "user/:id/loading": "loadingFriends"
+    "user/:id/loading": "loadingFriends", 
+    "user/:id/statuses": "displayStatuses"
   },
 
   initialize: function() {
@@ -14,23 +15,12 @@ CoolioApp.Router = Backbone.Router.extend({
    // this.loadNavView( new CoolioApp.Views.Login() );
    // TODO FIGURE OUT HOW TO PASS THE SESSION INTO THE VIEW
    this.loadView( new CoolioApp.Views.Hello() );
-   this.loadNavView( new CoolioApp.Views.NewSession() );
+   this.loadNavView( new CoolioApp.Views.NewSession({model: CoolioApp.currentUserModel}) );
   },
 
   displayUserDetails: function(userid) {
     this.loadNavView( new CoolioApp.Views.Logout() );
     this.loadView( new CoolioApp.Views.User({model: CoolioApp.currentUserModel}) );
-    // CoolioApp.currentUserModel.set( {id: userid} );
-    // var self = this;
-    // CoolioApp.currentUserModel.fetch({
-    //   success: function(response) {
-    //     self.loadNavView( new CoolioApp.Views.Logout() );
-    //     self.loadView( new CoolioApp.Views.User({model: CoolioApp.currentUserModel}) );
-    //   }, error: function() {
-    //     // DO SOMETHING IF CURRENT USER CANNOT BE FOUND
-    //     console.log("error in current user fetch");
-    //   }
-    // });
   },
 
   displayFriends: function(userid) {
@@ -38,7 +28,13 @@ CoolioApp.Router = Backbone.Router.extend({
     this.loadView(new CoolioApp.Views.FriendsList({collection: CoolioApp.Friendships}));
   },
 
+  displayStatuses: function(userid) {
+    CoolioApp.Statuses = new CoolioApp.Collections.Statuses({id: userid});
+    this.loadView(new CoolioApp.Views.StatusList({collection: CoolioApp.Statuses}));
+  },
+
   loadingFriends: function(userid) {
+    console.log("LOADING FUNCTION IN ROUTER");
     this.loadView(new CoolioApp.Views.Loading({model: CoolioApp.currentUserModel}));
   },
 

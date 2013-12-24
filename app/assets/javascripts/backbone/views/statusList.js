@@ -1,17 +1,17 @@
-CoolioApp.Views.FriendsList = Backbone.View.extend({
-  className: "friends-list",
+CoolioApp.Views.StatusList = Backbone.View.extend({
+  className: "status-list",
 
   initialize: function() {
     this.listenTo(this.collection, "reset", this.addAll);
-    console.log("COLLECTION ID INSIDE THE FRIENSLIST VIEW", this.collection.id);
+    console.log("COLLECTION ID INSIDE THE STATUSLIST VIEW", this.collection.id);
     this.collection.fetch({ 
       reset: true,
       success: function() {
         // Backbone.history.navigate("user/" + CoolioApp.Session.get("session_id"), {trigger:true});
-        console.log("COLLECTION FETCHED");
+        console.log("STATUS COLLECTION FETCHED");
       }, 
       error: function() {
-        console.log("FRIENDSHIP COLLECTION FETCH ERROR");
+        console.log("STATUS COLLECTION FETCH ERROR");
         // Backbone.history.navigate("user/" + this.collection.id + "/loading", {trigger:true});
       } 
     });

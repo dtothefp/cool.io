@@ -2,7 +2,8 @@
   <h1>Welcome  <%%= this.model.get("name") %></h1>
   <img src="<%%= this.model.get("image_url") %>" alt="facebook profile image">
   <form>
-    <button>Find Your Friends</button>
+    <button id="get-friends">Find Your Friends</button>
+    <button id="get-status">Get Your Statuses</button>
   </form>
 </script>
 
@@ -23,7 +24,7 @@
 
 <script type="text/html" id="friends-html">
     <li><%%= this.model.get("name") %></li>
-    <li><img src="<%%= this.model.get("image_url") %>" alt="facebook profile image"></li>
+    <li><a href="https://www.facebook.com/<%%= this.model.get("fb_id") %>" target="_blank"><img src="<%%= this.model.get("image_url") %>" alt="facebook profile image"></a></li>
 </script>
 
 <script type="text/html" id="loading">

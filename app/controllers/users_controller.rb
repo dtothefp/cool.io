@@ -7,44 +7,31 @@ class UsersController < ApplicationController
 
   def create
     @user = User.find_or_initialize_by(fb_id: user_params[:fb_id])
-    if @user.persisted?
-      if !@user.authenticated?
-        # USER PREVIOUSLY STORED AS AN AUTHENTICATE USER'S FRIEND -- MUST PERSIST EMAIL, OAUTH, AND AUTHENTICATE
-        response = JSON.parse HTTParty.get "https://graph.facebook.com/" + user_params[:fb_id] + "?access_token=" + user_params[:oauth_token]
-        @user.email = response.email
-        @user.type = "Authenticated"
-      end
-      #UPDATE THE RETURNING AUTHENTICATED USER'S OAUTH TOKEN
-      @user.oauth_token = user_params[:oauth_token]
-      @user.oauth_expires_at = user_params[:oauth_expires_at]
-
-      binding.pry
-      if @user.save
-        render json: @user
-      else
-        render json: @user.errors, status: :unprocessable_entity
-      end
-
+    if @user.persisted? && !@user.authenticated?
+      # USER PREVIOUSLY STORED AS AN AUTHENTICATED USER'S FRIEND -- MUST PERSIST EMAIL, OAUTH, AND AUTHENTICATE
+      response = JSON.parse HTTParty.get "https://graph.facebook.com/" + user_params[:fb_id] + "?access_token=" + user_params[:oauth_token]
+      @user.attributes = user_params.merge({email: response["email"], type: "Authenticated"})
     else
+      # USER HAS NEVER VISITED THE APP OR IS NOT A FRIEND OF A CURRENT USER -- CREATE A NEW USER
       response = JSON.parse HTTParty.get "https://graph.facebook.com/" + user_params[:fb_id] + "?fields=id,name,picture,email&access_token=" + user_params[:oauth_token]
       @user.attributes = user_params.merge({name: response["name"], email: response["email"], type: "Authenticated", image_url: response["picture"]["data"]["url"]})
-      binding.pry
-
-      if @user.save
-        render json: @user
-      else
-        render json: @user.errors, status: :unprocessable_entity
-      end
     end
 
-    #TODO Dry that SHIT up!!!!! DAwwwwgggg!!!
-    # OPTIMIZE make sure to only check and update as necessary in the future
+    if @user.save
+      render json: @user
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+
   end
 
   def show
     @user = User.find(params[:id])
-
-    render json: @user
+    if @user.save
+      render json: @user
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
   end
 
   private
@@ -64,15 +51,5 @@ class UsersController < ApplicationController
     user.oauth_expires_at = token_arr[1][0]
     user.oauth_token = token_arr[0][0]
   end
-
-  def add_pic(user)
-    response = JSON.parse (HTTParty.get "https://graph.facebook.com/" + user.fb_id + "?fields=friends.fields(picture)&access_token=" + user.oauth_token )
-      response["friends"]["data"].each do |data|
-        friend = User.find_by(fb_id: data["id"])   
-        friend.image_url = data["picture"]["data"]["url"] 
-        friend.save 
-      end  
-  end
-
 
 end

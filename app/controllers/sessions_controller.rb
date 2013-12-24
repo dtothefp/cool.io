@@ -9,39 +9,18 @@ class SessionsController < ApplicationController
   # # end
 
  def create
-  # session exists
-  # session doesn't exist but user does
-  # session and user don't exist
   @user = User.find_by(fb_id: params[:fb_id])
-  # unless session[:fb_id]
-  #   if !@user
-  #     @user = User.new_authencticated_user(params[:ouath_token], params[:oauth_expires_at], params[:fb_id])
-  #   elsif @user.type.nil?
-  #     binding.pry
-  #   else
-  #     #update token
-  #     @user.oauth_token = params[:ouath_token]
-  #     @user.oauth_expires_at = params[:oauth_expires_at]
-  #     binding.pry
-  #   end
-  #   session[:fb_id] = params[:fb_id]
-  # end
-
-  # if @user.save
-  #   render json: {id: @user.id}
-  # else
-  #   render json: @user.errors, status: :unprocessable_entity
-  # end
-  session[:fb_id] = params[:fb_id]
-
-  if session[:fb_id]
-    render json: params[:session]
+  if !session[:user_id]
+    session[:user_id] = @user.id
+    #TODO update access token
+    User.update_access_token(params[:fb_id], params[:oauth_token], params[:oauth_expires_at])
   end
 
+  render json: {id: @user.id}
  end
 
  def destroy
-  session[:fb_id] = nil
+  session[:user_id] = nil
 
   render json: {}
  end

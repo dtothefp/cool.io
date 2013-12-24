@@ -4,11 +4,13 @@ CoolioApp.Views.User = Backbone.View.extend({
   template: _.template($("script#user-details").html()),
 
   initialize: function() {
+    this.listenTo(this.model, "change", this.render);
     this.render();
   },
 
   events: {
-    "click": "findFriends"
+    "click #get-friends": "findFriends",
+    "click #get-status": "getStatuses"
   },
 
   render: function() {
@@ -17,6 +19,10 @@ CoolioApp.Views.User = Backbone.View.extend({
 
   findFriends: function() {
     Backbone.history.navigate("user/" + this.model.get("id") + "/friendships", {trigger:true});
+  },
+
+  getStatuses: function() {
+    Backbone.history.navigate("user/" + this.model.get("id") + "/statuses", {trigger:true});
   }
 
 });

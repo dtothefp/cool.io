@@ -6,6 +6,7 @@ CoolioApp.Collections.Friendships = Backbone.Collection.extend({
   model: CoolioApp.Models.Friend,
 
   url: function() {
+    console.log("ID INSIDE THE FRIENDSHIPS COLLECTION", this.id);
     return "users/" + this.id + "/friendships";
   }
 });

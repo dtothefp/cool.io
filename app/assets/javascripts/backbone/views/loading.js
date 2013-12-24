@@ -4,6 +4,7 @@ CoolioApp.Views.Loading = Backbone.View.extend({
   template: _.template($("script#loading").html()),
 
   initialize: function() {
+    console.log("LOADING VIEW");
     this.render();
   },
 
