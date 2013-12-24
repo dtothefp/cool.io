@@ -5,6 +5,7 @@ class FriendshipsController < ApplicationController
     if @user.friends.count == 0
       add_friends(@user)
       add_pics(@user)
+      binding.pry
     end
 
     render json: @user.friends

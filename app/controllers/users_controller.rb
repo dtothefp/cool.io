@@ -6,26 +6,30 @@ class UsersController < ApplicationController
   end
 
   def create
-    ## TODO expired method doesn't work because short term token is always changing
     @user = User.find_or_initialize_by(fb_id: user_params[:fb_id])
     if @user.persisted?
-      if @user.authenticated?
+      if !@user.authenticated?
+        # USER PREVIOUSLY STORED AS AN AUTHENTICATE USER'S FRIEND -- MUST PERSIST EMAIL, OAUTH, AND AUTHENTICATE
+        response = JSON.parse HTTParty.get "https://graph.facebook.com/" + user_params[:fb_id] + "?access_token=" + user_params[:oauth_token]
+        @user.email = response.email
+        @user.type = "Authenticated"
+      end
+      #UPDATE THE RETURNING AUTHENTICATED USER'S OAUTH TOKEN
+      @user.oauth_token = user_params[:oauth_token]
+      @user.oauth_expires_at = user_params[:oauth_expires_at]
+
+      binding.pry
+      if @user.save
         render json: @user
       else
-        set_oauth(@user)
-        # add_friends(@user)
-        if @user.update
-          render json: @user
-        else
-          #TODO if the user deletes app from their facebook settings they will still be stored in the DB but we need to reset their token
-          render json: @user.errors, status: :unprocessable_entity
-        end
+        render json: @user.errors, status: :unprocessable_entity
       end
 
     else
-      @user.attributes = user_params.merge({type: "Authenticated"})
-      set_oauth(@user)
-      # add_friends(@user)
+      response = JSON.parse HTTParty.get "https://graph.facebook.com/" + user_params[:fb_id] + "?fields=id,name,picture,email&access_token=" + user_params[:oauth_token]
+      @user.attributes = user_params.merge({name: response["name"], email: response["email"], type: "Authenticated", image_url: response["picture"]["data"]["url"]})
+      binding.pry
+
       if @user.save
         render json: @user
       else
@@ -38,21 +42,15 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find_by(fb_id: params[:id])
+    @user = User.find(params[:id])
 
     render json: @user
-  end
-
-  def friends
-    friends_response = JSON.parse HTTParty.get("https://graph.facebook.com/640435782/friends?access_token=" + current_user.oauth_token)
-
-    render json: friends_response
   end
 
   private
 
   def user_params
-      params.require(:user).permit(:name, :email, :fb_id, :oauth_expires_at, :image_url)
+      params.require(:user).permit(:fb_id, :oauth_expires_at, :oauth_token)
   end
 
   def parse_token(token)
@@ -75,5 +73,6 @@ class UsersController < ApplicationController
         friend.save 
       end  
   end
+
 
 end

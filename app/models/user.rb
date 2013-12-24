@@ -6,6 +6,28 @@ class User < ActiveRecord::Base
   has_many :friendships, foreign_key: "user_id", class_name: "Friendship"
   has_many :shares
 
+  def self.new_authencticated_user(token, token_expires, id)
+    binding.pry
+    response = JSON.parse HTTParty.get "https://graph.facebook.com/" + id + "?fields=id,name,picture,email&access_token=" + token
+    new(name: response["name"], email: response["email"], fb_id: id, type: "Authenticated", image_url: response["picture"]["data"]["url"], oauth_token: token, oauth_expires_at: token_expires)
+  end
+
+   def self.add_friends
+    response = JSON.parse HTTParty.get "https://graph.facebook.com/" + self.fb_id + "/friends?access_token=" + self.oauth_token
+    response["data"].each do |friend_data|
+      user.friends << User.new(name: friend_data["name"], fb_id: friend_data["id"])
+    end
+    self.add_pics
+  end
+
+  def self.add_pics
+    response = JSON.parse (HTTParty.get "https://graph.facebook.com/" + self.fb_id + "?fields=friends.fields(picture)&access_token=" + self.oauth_token )
+      response["friends"]["data"].each do |data|
+        friend = User.find_by(fb_id: data["id"])   
+        friend.image_url = data["picture"]["data"]["url"] 
+        friend.save 
+      end  
+  end
 
   def self.exists? fb_id
     # User.where(fb_id: self.fb_id) ? true : false

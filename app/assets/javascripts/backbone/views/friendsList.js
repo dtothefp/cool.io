@@ -3,9 +3,17 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
 
   initialize: function() {
     this.listenTo(this.collection, "reset", this.addAll);
-    this.addAll();
-
-    this.collection.fetch({ reset: true });
+    this.collection.fetch({ 
+      reset: true,
+      success: function() {
+        // Backbone.history.navigate("user/" + CoolioApp.Session.get("session_id"), {trigger:true});
+        console.log("COLLECTION FETCHED");
+      }, 
+      error: function() {
+        console.log("FRIENDSHIP COLLECTION FETCH ERROR");
+      } 
+    });
+    // Backbone.history.navigate("user/" + this.collection.id + "/loading", {trigger:true});
   },
 
   addAll: function() {

@@ -10,12 +10,28 @@ var CoolioApp = {
   checkLoginStatus: function() {
     
     FB.getLoginStatus(function(response) {
-      console.log("CHECK FACEBOOK LOGIN STATUS");
       if (response.status === 'connected') {
-        console.log("CONNECTED");
-        CoolioApp.currentUserModel.set( {id: response.authResponse.userID} );
-        CoolioApp.currentUserModel.fetch();
-        Backbone.history.navigate("user/" + response.authResponse.userID, {trigger: true});
+        console.log("CONNECTED IN CHECK LOGIN STATUS");
+        CoolioApp.Session.save({fb_id: response.authResponse.userID, ouath_token: response.authResponse.accessToken, oauth_expires_at: response.authResponse.expiresIn}, {
+          success: function(response) {
+            console.log("RESPONSE FROM SESSION", response);
+            CoolioApp.currentUserModel.save({
+              fb_id: response.attributes.fb_id,
+              oauth_token: response.attributes.ouath_token,
+              oauth_expires_at: response.attributes.oauth_expires_at
+            }, {
+              success: function(response) {
+                Backbone.history.navigate("user/" + response.attributes.id, {trigger: true});
+              },
+              error: function() {
+
+              }
+            });
+          }, error: function(response) {
+            // DO SOMETHING IF SESSION CANNOT BE FOUND IN THE DB
+            console.log("ERROR IN SESSION RESPONSE");
+          }
+        });
       } else if (response.status === 'not_authorized') {
         console.log("LOGGED INTO FB BUT NOT AUTHORIZED ON APP");
         Backbone.history.navigate("welcome", {trigger: true});

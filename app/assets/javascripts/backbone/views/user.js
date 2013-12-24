@@ -4,8 +4,6 @@ CoolioApp.Views.User = Backbone.View.extend({
   template: _.template($("script#user-details").html()),
 
   initialize: function() {
-    this.listenTo(this.model, "change", this.render)
-    console.log("THE MODEL IN THE USER VIEW", this.model);
     this.render();
   },
 

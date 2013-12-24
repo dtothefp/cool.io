@@ -5,7 +5,6 @@ CoolioApp.Views.Logout = Backbone.View.extend({
   template: _.template($("script#logout-view").html()),
 
   initialize: function() {
-    console.log("instantiate logout view");
     this.render();
   },
 
@@ -15,8 +14,21 @@ CoolioApp.Views.Logout = Backbone.View.extend({
 
   logoutFB: function() {
     FB.logout(function(response) {
-      location.reload();
-      // CoolioApp.checkAuthentication();
+      if (response) {
+        // CLEARS THE NAMESPACED CURRENT USER MODEL
+        CoolioApp.currentUserModel.clear();
+        // DESTROYS THE SESSION ON THE SERVER
+        CoolioApp.Session.destroy({
+          success: function() {
+            // CLEARS THE NAMESPACED SESSION MODEL
+            CoolioApp.Session.clear();
+            Backbone.history.navigate("welcome", {trigger: true});
+          }, 
+          error: function() {
+
+          }
+        });
+      };
     });
   },
 
