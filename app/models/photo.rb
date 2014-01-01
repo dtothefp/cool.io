@@ -1,4 +1,3 @@
-class Photo < ActiveRecord::Base
-
-  has_many :shares, :as => :shareable
+class Photo < Post
+  
 end

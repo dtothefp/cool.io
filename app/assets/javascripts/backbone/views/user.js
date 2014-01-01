@@ -10,7 +10,7 @@ CoolioApp.Views.User = Backbone.View.extend({
 
   events: {
     "click #get-friends": "findFriends",
-    "click #get-status": "getStatuses"
+    "click #get-shares": "getShares"
   },
 
   render: function() {
@@ -21,8 +21,9 @@ CoolioApp.Views.User = Backbone.View.extend({
     Backbone.history.navigate("user/" + this.model.get("id") + "/friendships", {trigger:true});
   },
 
-  getStatuses: function() {
-    Backbone.history.navigate("user/" + this.model.get("id") + "/statuses", {trigger:true});
+  getShares: function() {
+    console.log("SHARES FUNCTION IN USER VIEW");
+    Backbone.history.navigate("user/" + this.model.get("id") + "/shares", {trigger:true});
   }
 
 });

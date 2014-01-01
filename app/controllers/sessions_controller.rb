@@ -20,6 +20,7 @@ class SessionsController < ApplicationController
  end
 
  def destroy
+  binding.pry
   session[:user_id] = nil
 
   render json: {}
