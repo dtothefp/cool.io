@@ -1,4 +1,3 @@
-class Status < ActiveRecord::Base
+class Status < Post
 
-  has_many :shares, :as => :shareable
 end

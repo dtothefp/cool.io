@@ -4,12 +4,12 @@ CoolioApp.Router = Backbone.Router.extend({
     "user/:id": "displayUserDetails",
     "user/:id/friendships": "displayFriends",
     "user/:id/loading": "loadingFriends", 
-    "user/:id/statuses": "displayStatuses"
+    "user/:id/shares": "displayShares"
   },
 
-  initialize: function() {
+  // initialize: function() {
 
-  },
+  // },
 
   login: function() {
    // this.loadNavView( new CoolioApp.Views.Login() );
@@ -28,9 +28,9 @@ CoolioApp.Router = Backbone.Router.extend({
     this.loadView(new CoolioApp.Views.FriendsList({collection: CoolioApp.Friendships}));
   },
 
-  displayStatuses: function(userid) {
-    CoolioApp.Statuses = new CoolioApp.Collections.Statuses({id: userid});
-    this.loadView(new CoolioApp.Views.StatusList({collection: CoolioApp.Statuses}));
+  displayShares: function(userid) {
+    CoolioApp.Shares = new CoolioApp.Collections.Shares({id: userid});
+    this.loadView(new CoolioApp.Views.SharesList({collection: CoolioApp.Shares}));
   },
 
   loadingFriends: function(userid) {

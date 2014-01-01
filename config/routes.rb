@@ -1,11 +1,10 @@
 CoolIo::Application.routes.draw do
  root 'app#index'
 
- resource :sessions
+ resources :sessions
  resources :users do
   resources :friendships
+  resources :shares
   resources :posts
-  resources :statuses
-  resources :photos
  end
 end

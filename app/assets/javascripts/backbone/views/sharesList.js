@@ -1,4 +1,4 @@
-CoolioApp.Views.StatusList = Backbone.View.extend({
+CoolioApp.Views.SharesList = Backbone.View.extend({
   className: "status-list",
 
   initialize: function() {

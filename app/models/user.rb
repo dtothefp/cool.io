@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :friends, through: :friendships
   has_many :friendships, foreign_key: "user_id", class_name: "Friendship"
   has_many :shares
+  has_many :posts, through: :shares
 
   def self.new_authencticated_user(token, token_expires, id)
     response = JSON.parse HTTParty.get "https://graph.facebook.com/" + id + "?fields=id,name,picture,email&access_token=" + token
@@ -12,6 +13,7 @@ class User < ActiveRecord::Base
   end
 
   def self.update_access_token(facebook_id, token, token_expires)
+    binding.pry
     user = find_by(fb_id: facebook_id);
     user.attributes = { oauth_token: token, oauth_expires_at: token_expires }
     user.save

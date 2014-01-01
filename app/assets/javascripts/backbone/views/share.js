@@ -1,7 +1,7 @@
-CoolioApp.Views.Status = Backbone.View.extend({
+CoolioApp.Views.Share = Backbone.View.extend({
   tagName: "ul",
 
-  template: _.template($("script#status-html").html()),
+  template: _.template($("script#share-html").html()),
 
   initialize: function() {
     // TODO add a message that this may take a while and a returning user? column in user table
