@@ -65,6 +65,11 @@ jQuery(function() {
     CoolioApp.checkLoginStatus();
   }
 });
+
+CoolioApp.currentUserModel = new CoolioApp.Models.User();
+CoolioApp.Session = new CoolioApp.Models.Session();
+new CoolioApp.Router();
+Backbone.history.start();
 </script>
 
 
