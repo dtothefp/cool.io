@@ -10,27 +10,24 @@ class SharesController < ApplicationController
     post_data = response["posts"]
     link_data.each do |link|
       link_instance = Link.create(title: link["name"], description: link["description"], link_url: link["link"], image_url: link["picture"] ? link["picture"] : nil)
-      binding.pry
+
       link["likes"]["data"].each do |liker|
         user = User.find_by(fb_id: liker["id"])
-        binding.pry
+  
       end
     end
-    binding.pry
     render json: @user.shares
   end
 
   def create
     @user = User.find_by(fb_id: params[:fb_id])
     response = JSON.parse HTTParty.get "https://graph.facebook.com/" + @user.fb_id + "/feed?access_token=" + @user.oauth_token
-    binding.pry
   end
 
   private
 
   def add_statuses(user)
     
-    binding.pry
     # response["data"].each do |friend_data|
     #   user.friends << User.new(name: friend_data["name"], fb_id: friend_data["id"])
     # end

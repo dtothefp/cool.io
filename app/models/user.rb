@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
   end
 
   def self.update_access_token(facebook_id, token, token_expires)
-    binding.pry
     user = find_by(fb_id: facebook_id);
     user.attributes = { oauth_token: token, oauth_expires_at: token_expires }
     user.save

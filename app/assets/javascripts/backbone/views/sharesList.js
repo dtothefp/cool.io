@@ -1,17 +1,17 @@
 CoolioApp.Views.SharesList = Backbone.View.extend({
-  className: "status-list",
+  className: "SHARE-list",
 
   initialize: function() {
     this.listenTo(this.collection, "reset", this.addAll);
-    console.log("COLLECTION ID INSIDE THE STATUSLIST VIEW", this.collection.id);
+    console.log("COLLECTION ID INSIDE THE SHARELIST VIEW", this.collection.id);
     this.collection.fetch({ 
       reset: true,
       success: function() {
         // Backbone.history.navigate("user/" + CoolioApp.Session.get("session_id"), {trigger:true});
-        console.log("STATUS COLLECTION FETCHED");
+        console.log("SHARE COLLECTION FETCHED");
       }, 
       error: function() {
-        console.log("STATUS COLLECTION FETCH ERROR");
+        console.log("SHARE COLLECTION FETCH ERROR");
         // Backbone.history.navigate("user/" + this.collection.id + "/loading", {trigger:true});
       } 
     });
