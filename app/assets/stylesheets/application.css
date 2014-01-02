@@ -50,7 +50,7 @@ div#hello {
 
 div#hello::after {
   content: "";
-  background: url(http://motherboard-assets.s3.amazonaws.com/content-images/article/prepare-to-be-even-more-disappointed-with-bang-with-friends/f761ab17b069161eee58eb64803f1e2e_vice_630x420.jpg) no-repeat center center;
+  background: url(http://www.findwebapp.com/wp-content/uploads/2012/09/unfriended-facebook-friend1.jpg) no-repeat center center;
   opacity: 0.5;
   top: 0;
   left: 0;
@@ -58,13 +58,14 @@ div#hello::after {
   right: 0;
   position: absolute;
   z-index: -1;   
+  background-size: cover;
 }
 
 div#hello h1 {
   font-weight: bold !important;
   background: rgba(255, 255, 255, .4);
   position: relative;
-  top: 40px;
+  top: 316px;
 }
 
 #sign_up {

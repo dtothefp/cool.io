@@ -17,11 +17,11 @@ CoolioApp.Views.Hello = Backbone.View.extend({
   }, 
 
   cleanHumor: function() {
-    $("#dirty").text("IND");
+    $("#dirty").text("$@%");
   },
 
   dirtyHumor: function() {
-    $("#dirty").text("$@%");
+    $("#dirty").text("IND");
   }
 
 });
