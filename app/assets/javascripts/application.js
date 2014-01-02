@@ -12,10 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require modernizr.js
+//= require modernizr
 //= require foundation
 //= require turbolinks
-//= require facebook_sdk
 //= require underscore
 //= require backbone
 //= require main
