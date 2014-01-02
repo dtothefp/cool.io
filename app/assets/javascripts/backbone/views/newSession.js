@@ -10,7 +10,7 @@ CoolioApp.Views.NewSession = Backbone.View.extend({
   template: _.template($("script#new-session").html()),
 
   initialize: function() {
-    this.listenTo(this.model, "change:name", this.navigateToUserPath);
+    this.listenTo(this.model, "sync", this.navigateToUserPath);
     this.render();
   },
 
