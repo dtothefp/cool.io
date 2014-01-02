@@ -62,14 +62,13 @@ jQuery(function() {
     });
     console.log("FACEBOOK KEY", <%= ENV["FACEBOOK_KEY_COOL_IO"] %>)
     console.log("APP INITIALIZED");
+    CoolioApp.currentUserModel = new CoolioApp.Models.User();
+    CoolioApp.Session = new CoolioApp.Models.Session();
+    new CoolioApp.Router();
+    Backbone.history.start();
     CoolioApp.checkLoginStatus();
   }
 });
-
-CoolioApp.currentUserModel = new CoolioApp.Models.User();
-CoolioApp.Session = new CoolioApp.Models.Session();
-new CoolioApp.Router();
-Backbone.history.start();
 </script>
 
 

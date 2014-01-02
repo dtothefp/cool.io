@@ -12,6 +12,7 @@ CoolioApp.Router = Backbone.Router.extend({
   // },
 
   login: function() {
+    console.log("LOGIN FUNCTION IN THE ROUTER");
    // this.loadNavView( new CoolioApp.Views.Login() );
    // TODO FIGURE OUT HOW TO PASS THE SESSION INTO THE VIEW
    this.loadView( new CoolioApp.Views.Hello() );
