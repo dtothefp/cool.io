@@ -68,6 +68,7 @@ jQuery(function() {
       frictionlessRequests : true,
       cookie: true
     });
+    console.log("FACEBOOK KEY", <%= ENV["FACEBOOK_KEY_COOL_IO"] %>)
     console.log("APP INITIALIZED");
     CoolioApp.checkLoginStatus();
   }
