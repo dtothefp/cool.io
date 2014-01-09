@@ -3,39 +3,47 @@ class SharesController < ApplicationController
   def index
     @user = User.find(params[:user_id])
     response = JSON.parse HTTParty.get "https://graph.facebook.com/" + @user.fb_id + "?fields=photos,posts,statuses,links&access_token=" + @user.oauth_token
-
-    photo_data = response["photos"]
-    link_data = response["links"]["data"]
-    status_data = response["statuses"]
-    post_data = response["posts"]
-    link_data.each do |link|
-      link_instance = Link.create(title: link["name"], description: link["description"], link_url: link["link"], image_url: link["picture"] ? link["picture"] : nil)
-
-      link["likes"]["data"].each do |liker|
-        user = User.find_by(fb_id: liker["id"])
-  
-      end
-    end
+    binding.pry
+    add_links(response)
     render json: @user.shares
-  end
-
-  def create
-    @user = User.find_by(fb_id: params[:fb_id])
-    response = JSON.parse HTTParty.get "https://graph.facebook.com/" + @user.fb_id + "/feed?access_token=" + @user.oauth_token
   end
 
   private
 
-  def add_statuses(user)
-    
-    # response["data"].each do |friend_data|
-    #   user.friends << User.new(name: friend_data["name"], fb_id: friend_data["id"])
-    # end
+   def add_links(response)
+    post_types = { "App" => "posts", "Photo" => "photos", "Status" => "statuses", "Link" => "links"}
+    post_types.each do |type, fb_type|
+      binding.pry
+      response[fb_type]["data"].each do |post|
+        post_instance = Post.create_link(post, type)
+        Share.create(post_id: post_instance.id, user_id: @user.id, author: true)
+        add_likes(post, post_instance)
+        add_comments(post, post_instance)
+      end
+    end
+  end
 
-    # response["data"][0]["message"] iterate through each message
-    # inside the iteration
-    #### response["data"][0]["likes"]["data"][0]["id"] iterate through each like
-    #### response["data"][0]["comments"]["data"][0]["from"]["id"] iterate through each comment
+  def add_likes(post_obj, post_instance)
+    if post_obj["likes"]
+      post_obj["likes"]["data"].each do |liker|
+        user = User.find_by(fb_id: liker["id"])
+        # TODO if the user does not already exist, use a method to add them to the database as an unauthenticated user
+        if user
+          Share.create(post_id: post_instance.id, user_id: user.id, liker: true)
+        end
+      end
+    end
+  end
+
+  def add_comments(post_obj, post_instance)
+    if post_obj["comments"]
+      post_obj["comments"]["data"].each do |commenter|
+        user = User.find_by(fb_id: commenter["from"]["id"])
+        if user
+          Share.create(post_id: post_instance.id, user_id: user.id, commenter: true)
+        end
+      end
+    end
   end
 
 end

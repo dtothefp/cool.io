@@ -1,3 +1,3 @@
 class Link < Post
-  
+
 end
