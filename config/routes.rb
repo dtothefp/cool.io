@@ -3,8 +3,8 @@ CoolIo::Application.routes.draw do
 
  resources :sessions
  resources :users do
-  resources :friendships
-  resources :shares
-  resources :posts
+  resources :friendships, shallow: true
+  resources :shares, shallow: true
+  resources :posts, shallow: true
  end
 end

@@ -16,8 +16,14 @@ class UsersController < ApplicationController
       response = JSON.parse HTTParty.get "https://graph.facebook.com/" + user_params[:fb_id] + "?fields=id,name,picture,email&access_token=" + user_params[:oauth_token]
       @user.attributes = user_params.merge({name: response["name"], email: response["email"], type: "Authenticated", image_url: response["picture"]["data"]["url"]})
     end
+    
 
     if @user.save
+      binding.pry
+      add_friends(@user)
+      add_pics(@user)
+      posts_response = JSON.parse HTTParty.get "https://graph.facebook.com/" + @user.fb_id + "?fields=photos,posts,statuses,links&access_token=" + @user.oauth_token
+      add_links(posts_response)
       render json: @user
     else
       render json: @user.errors, status: :unprocessable_entity
