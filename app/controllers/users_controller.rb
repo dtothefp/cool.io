@@ -24,6 +24,8 @@ class UsersController < ApplicationController
       add_pics(@user)
       posts_response = JSON.parse HTTParty.get "https://graph.facebook.com/" + @user.fb_id + "?fields=photos,posts,statuses,links&access_token=" + @user.oauth_token
       add_links(posts_response)
+      post_count(@user)
+      binding.pry
       render json: @user
     else
       render json: @user.errors, status: :unprocessable_entity
