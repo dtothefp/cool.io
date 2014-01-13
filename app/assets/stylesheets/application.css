@@ -149,5 +149,12 @@ width: 250px;
   width: 500px!important;
 }
 
+.friends-list svg {
+  background: black;
+  padding: 20px;
+  display: block;
+  margin: 20px auto;
+}
+
 
 

@@ -8,7 +8,7 @@ CoolioApp.Views.SharesList = Backbone.View.extend({
       reset: true,
       success: function() {
         // Backbone.history.navigate("user/" + CoolioApp.Session.get("session_id"), {trigger:true});
-        console.log("SHARE COLLECTION FETCHED");
+        console.log("SHARE COLLECTION FETCHED", console.log(this.collection));
       }, 
       error: function() {
         console.log("SHARE COLLECTION FETCH ERROR");

@@ -25,6 +25,7 @@ CoolioApp.Router = Backbone.Router.extend({
   },
 
   displayFriends: function(userid) {
+    this.loadNavView( new CoolioApp.Views.Logout() );
     CoolioApp.Friendships = new CoolioApp.Collections.Friendships({id: userid});
     console.log("FRIENDSHIPS COLLECTION", CoolioApp.Friendships);
     this.loadView(new CoolioApp.Views.FriendsList({collection: CoolioApp.Friendships}));

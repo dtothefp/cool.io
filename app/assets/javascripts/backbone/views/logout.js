@@ -34,6 +34,7 @@ CoolioApp.Views.Logout = Backbone.View.extend({
 
   render: function() {
     this.$el.html(this.template());
+    console.log("logout render logout-view");
   }
 
 });
