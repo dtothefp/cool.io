@@ -33,20 +33,20 @@
 // Backbone.history.start();
 
 $(function(){
+  CoolioApp.initialize();
   $(document).foundation();
   $('body').prepend('<div id="fb-root"></div>');
    window.fbAsyncInit = function() {
       FB.init({
-        appId: '<%= ENV["FACEBOOK_KEY_COOL_IO"] %>',
+        appId: '<%= CoolIo::Application.config.app_id %>',
         status     : true,
         frictionlessRequests : true,
         cookie: true
       });
-      console.log("FACEBOOK KEY", <%= ENV["FACEBOOK_KEY_COOL_IO"] %>)
+      console.log("FACEBOOK KEY", <%= CoolIo::Application.config.app_id %>)
       console.log("APP INITIALIZED");
       CoolioApp.checkLoginStatus();
     }
-  CoolioApp.initialize();
 });
 
 (function(d, s, id) {
