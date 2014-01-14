@@ -165,5 +165,22 @@ width: 250px;
   margin: 20px auto;
 }
 
+/********* GRAPH STYLING *********/
 
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.axis .x line, .axis .x text {
+  display: none;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+    stroke: black;
+}
 

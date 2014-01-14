@@ -89,9 +89,40 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
         d3.select(this).attr("r", 20);
      })
      .on("mouseout", function(d){
-        d3.select(this).attr("r", d.get("count") !== 0 ? d.get("count") : 2);
+        d3.select(this).attr("r", d.get("count") !== 0 ? (d.get("count") * 1.5) : 3);
      });
 
+     // .attr("fill", "yellow")
+     //  .attr("stroke", "orange")
+     //  .attr("stroke-width", function(d) {
+     //      return d/2;
+     //  });
+    
+    // CREATE THE X AND Y AXIS
+    var yAxis = d3.svg.axis()
+                      .scale(yScale)
+                      .orient("left")
+                      .ticks(5);
+
+    svg.append("g")
+      .attr("class", "axis y")
+      .attr("transform", "translate(" + padding + ",0)")
+      .call(yAxis);
+
+    var xAxis = d3.svg.axis()
+                    .scale(xScale)
+                    .orient("bottom")
+                    .ticks(5);
+
+    svg.append("g")
+      .attr("class", "axis x")
+      .attr("transform", "translate(0," + (h - padding) + ")")
+      .call(xAxis);
+
+    d3.selectAll(".x text").remove();
+
+
+     //REMOVE ALL ELMENTS WITH A COUNT OF ZERO
      var gElements = d3.selectAll("g")
 
      _.each(gElements[0], function(element){
