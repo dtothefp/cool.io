@@ -6,7 +6,7 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
     this.listenTo(this.collection, "reset", this.plotData);
     console.log("COLLECTION ID INSIDE THE STATUSLIST VIEW", this.collection.id);
     var self = this;
-    collection = this.collection;
+    // collection = this.collection;
     this.collection.fetch({ 
       reset: true,
       success: function() {
@@ -33,18 +33,19 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
 
   plotData: function() {
     //circles = d3.selectAll("circle")
-    var h = 960;
-    var w = 1200;
+    var h = 800;
+    var w = 960;
 
     var svg = d3.select(this.el)
             .append("svg")
             .attr("width", w)
-            .attr("height", h);
+            .attr("height", h)
+            .attr("fill", "rgba(0, 0, 255, 0.75)");
 
    var padding = 100;
 
    var xScale = d3.scale.linear()
-                     .domain([d3.min(this.collection.models, function(d){ return d.attributes.id}), d3.max(collection.models, function(d) { return d.attributes.id; })])
+                     .domain([d3.min(this.collection.models, function(d){ return d.attributes.id}), d3.max(this.collection.models, function(d) { return d.attributes.id; })])
                      .rangeRound([padding, w - padding]).clamp(true);
 
    var yScale = d3.scale.linear()
@@ -55,9 +56,14 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
                      .domain([0, d3.max(this.collection.models, function(d) { return d.attributes.count; })])
                      .rangeRound([0, 360]).clamp(true);
 
-     circles = svg.selectAll(".node")
+     svg.selectAll(".node")
      .data(this.collection.models)
      .enter()
+     .append("a")
+     .attr("xlink:href", function(d){
+      return "https://www.facebook.com/" + d.get("fb_id");
+     })
+     .attr("target", "_blank")
      .append("g")
      .on("mouseover", function(d){
         console.log("this in g", this); 
@@ -70,16 +76,28 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
         d3.select("g image").remove();
         d3.select("g text").remove();
      })
-     .attr("transform", function(d) { return "translate(" + xScale(d.attributes.id) + "," + yScale(d.attributes.count) + ")"; })
+     .attr("transform", function(d) { return "translate(" + xScale(d.get("id")) + "," + yScale(d.get("count")) + ")"; })
      .append("circle")
-     .attr("r", function(d){return d.attributes.count !== 0 ? d.attributes.count : 2})
+     .attr("r", function(d){return d.get("count") !== 0 ? (d.get("count") * 1.5) : 3})
      .attr("fill", function(d) {
-      return "hsla(" + colorScale(d.attributes.count) + ", 100%, 50%, .7)"})
+      return "hsla(" + colorScale(d.get("count")) + ", 100%, 50%, .7)"
+     })
+     // .attr("stroke", function(d) {
+     //  return "hsla(" + colorScale((d.get("count") + 50)) + ", 100%, 50%, .7)"
+     // })
      .on("mouseover", function(d){
         d3.select(this).attr("r", 20);
      })
      .on("mouseout", function(d){
-        d3.select(this).attr("r", d.attributes.count !== 0 ? d.attributes.count : 2);
+        d3.select(this).attr("r", d.get("count") !== 0 ? d.get("count") : 2);
+     });
+
+     var gElements = d3.selectAll("g")
+
+     _.each(gElements[0], function(element){
+       if (element.__data__.get("count") === 0) {
+        element.remove();
+       }
      });
   }
   
