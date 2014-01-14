@@ -19,11 +19,10 @@ class UsersController < ApplicationController
     
 
     if @user.save
-      add_friends(@user)
-      add_pics(@user)
-      posts_response = JSON.parse HTTParty.get "https://graph.facebook.com/" + @user.fb_id + "?fields=photos,posts,statuses,links&access_token=" + @user.oauth_token
-      add_links(posts_response)
-      post_count(@user)
+      add_friends(@user.id)
+      add_pics(@user.id)
+      add_links(@user.id)
+      post_count(@user.id)
       render json: @user
     else
       render json: @user.errors, status: :unprocessable_entity

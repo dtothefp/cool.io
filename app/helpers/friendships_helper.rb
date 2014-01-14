@@ -1,13 +1,15 @@
 module FriendshipsHelper
 
-  def add_friends(user)
+  def add_friends(id)
+    user = User.find(id)
     response = JSON.parse HTTParty.get "https://graph.facebook.com/" + user.fb_id + "/friends?access_token=" + user.oauth_token
     response["data"].each do |friend_data|
       user.friends << User.new(name: friend_data["name"], fb_id: friend_data["id"])
     end
   end
 
-  def add_pics(user)
+  def add_pics(id)
+    user = User.find(id)
     response = JSON.parse ( HTTParty.get "https://graph.facebook.com/" + user.fb_id + "?fields=friends.fields(picture)&access_token=" + user.oauth_token )
       response["friends"]["data"].each do |data|
         friend = User.find_by(fb_id: data["id"])   
@@ -16,7 +18,8 @@ module FriendshipsHelper
       end  
   end
 
-  def post_count(user)
+  def post_count(id)
+    user = User.find(id)
     result = ActiveRecord::Base.connection.execute("SELECT post_id FROM shares WHERE user_id = #{user.id} AND author = true")
     processed_result = result.map do |post|
       ActiveRecord::Base.connection.execute("SELECT user_id, COUNT(user_id) FROM shares WHERE post_id = #{post["post_id"]} AND (commenter = true OR liker = true) AND (user_id != #{user.id}) GROUP BY user_id;")

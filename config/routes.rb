@@ -7,4 +7,6 @@ CoolIo::Application.routes.draw do
   resources :shares, shallow: true
   resources :posts, shallow: true
  end
+
+ mount Resque::Server, :at => "/resque"
 end

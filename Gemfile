@@ -14,7 +14,7 @@ gem 'rails_12factor', group: :production
 gem 'omniauth-facebook'
 gem "rails-erd"
 gem 'zurb-foundation'
-gem 'delayed_job_active_record'
+gem 'resque', :require => "resque/server"
 
 group :doc do
   gem 'sdoc', require: false
