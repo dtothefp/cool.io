@@ -1,5 +1,5 @@
 class Post < ActiveRecord::Base
-  validates 
+  # validates 
 
   has_many :shares
   has_many :users, through: :shares
