@@ -16,7 +16,8 @@ CoolioApp.Views.User = Backbone.View.extend({
     this.$el.html(this.template());
   },
 
-  findFriends: function() {
+  findFriends: function(e) {
+    e.preventDefault();
     Backbone.history.navigate("user/" + this.model.get("id") + "/friendships", {trigger:true});
   }
 

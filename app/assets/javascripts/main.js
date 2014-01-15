@@ -26,6 +26,7 @@ var CoolioApp = {
             console.log("CURRENT USER MODEL IN THE CHECK LOGIN FUNCTION", CoolioApp.currentUserModel.attributes);
             CoolioApp.currentUserModel.fetch({
               success: function(response) {
+                Backbone.history.navigate("user/" + CoolioApp.currentUserModel.get("id"), {trigger: true});
                 console.log("CURRENT USER FETCHED IN MAIN.JS", response.attributes);
               },
               error: function(response) {
@@ -34,6 +35,7 @@ var CoolioApp = {
             });
           }, 
           error: function(response) {
+            alert("User Does Not Exist, Please Signup");
             console.log("ERROR INITIATING SESSION");
           }
         });

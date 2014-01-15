@@ -10,13 +10,14 @@ class SessionsController < ApplicationController
 
  def create
   @user = User.find_by(fb_id: params[:fb_id])
-  if !session[:user_id]
-    session[:user_id] = @user.id
-    #TODO update access token
-    User.update_access_token(params[:fb_id], params[:oauth_token], params[:oauth_expires_at])
-  end
-
+    if !session[:user_id]
+      session[:user_id] = @user.id
+      #TODO update access token
+      User.update_access_token(params[:fb_id], params[:oauth_token], params[:oauth_expires_at])
+    end
+    
   render json: {id: @user.id}
+
  end
 
  def destroy

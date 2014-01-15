@@ -20,27 +20,29 @@
 </head>
 <body>
 <nav class="top-bar" data-topbar>
-  <ul class="title-area">
-    <li class="name">
-      <h1><a href="/#welcome"><span id="logo">Cool.io</span> -- From the Innovators at DB Tracker</a></h1>
-    </li>
-    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-  </ul>
-
-  <section class="top-bar-section">
-    <!-- Right Nav Section -->
-    <ul class="right">
-      <li class="has-dropdown">
-        <a href="/#welcome">
-          <% if !logged_in? %>
-            Sign-Up / Login
-          <% else %>
-            Logout
-          <% end %>
-        </a>
+  <div class="inner-container">
+    <ul class="title-area">
+      <li class="name">
+        <h1><a href="/#welcome"><span id="logo">Cool.io</span> -- From the Innovators at DB Tracker</a></h1>
       </li>
+      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
     </ul>
-  </section>
+
+    <section class="top-bar-section">
+      <!-- Right Nav Section -->
+      <ul class="right">
+        <li class="has-dropdown">
+          <a href="/#welcome">
+            <% if !logged_in? %>
+              Sign-Up / Login
+            <% else %>
+              Logout
+            <% end %>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </div>
 </nav>
 <%= yield %>
 
