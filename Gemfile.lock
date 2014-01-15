@@ -277,7 +277,7 @@ DEPENDENCIES
   rails (= 4.0.0)
   rails-erd
   rails_12factor
-  resque (~> 1.25.1)
+  resque
   rspec-rails
   sass-rails (~> 4.0.0)
   sdoc
