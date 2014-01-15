@@ -14,7 +14,7 @@ gem 'rails_12factor', group: :production
 gem 'omniauth-facebook'
 gem "rails-erd"
 gem 'zurb-foundation'
-gem 'resque', :require => "resque/server"
+gem 'resque', "~> 1.22.0", :require => "resque/server"
 
 group :doc do
   gem 'sdoc', require: false
