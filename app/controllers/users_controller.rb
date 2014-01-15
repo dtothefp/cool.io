@@ -19,11 +19,10 @@ class UsersController < ApplicationController
     
 
     if @user.save
+      # Adds friends, associates them with the current user, and adds pics
       Resque.enqueue(FriendAdder, @user.id)
-      # add_pics(@user.id)
-      # add_links(@user.id)
+      # Adds Posts, associates them with users as author, liker, or commenter, and counts likes/comments
       Resque.enqueue(PostAdder, @user.id)
-      # post_count(@user.id)
       render json: @user
     else
       render json: @user.errors, status: :unprocessable_entity

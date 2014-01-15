@@ -18,7 +18,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: cool_io_production
+  database: cool_io_development
   pool: 5
   username: DtotheFP
   password:

@@ -5,8 +5,10 @@ describe User do
   describe "validations" do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:fb_id) }
-    it { should validate_uniqueness_of(:fb_id) }
-    it { should have_many(:friends) }
+    it { should have_many(:friends).through(:friendships) }
+    it { should have_many(:friendships).class_name(:Friendship) }
+    it { should have_many(:shares) }
+    it { should have_many(:posts).through(:shares) }
   end
 
   describe "#user_exists?" do

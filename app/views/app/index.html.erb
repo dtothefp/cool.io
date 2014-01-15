@@ -3,7 +3,6 @@
   <img src="<%%= this.model.get("image_url") %>" alt="facebook profile image">
   <form>
     <button id="get-friends">Find Your Friends</button>
-    <button id="get-shares">Get Your Post Data</button>
   </form>
 </script>
 
@@ -28,11 +27,6 @@
     <li>Count: <%%= this.model.get("count") %></li>
 </script>
 
-<script type="text/html" id="loading">
-    <h1><%%= this.model.get("name") %> please wait while your friends are loaded</h1>
-</script>
-
-<script type="text/html" id="share-html"></script>
 
 
 

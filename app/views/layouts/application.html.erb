@@ -31,7 +31,13 @@
     <!-- Right Nav Section -->
     <ul class="right">
       <li class="has-dropdown">
-        <a href="/#welcome">Sign-Up / Login</a>
+        <a href="/#welcome">
+          <% if !logged_in? %>
+            Sign-Up / Login
+          <% else %>
+            Logout
+          <% end %>
+        </a>
       </li>
     </ul>
   </section>
@@ -41,28 +47,32 @@
 <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 <script>
   $(function(){
-  CoolioApp.initialize();
-  $(document).foundation();
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-  $('body').prepend('<div id="fb-root"></div>');
-   window.fbAsyncInit = function() {
+    $(document).foundation();
+
+    // Load the SDK
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    
+    // Append the fb root Div
+    $('body').prepend('<div id="fb-root"></div>');
+    window.fbAsyncInit = function() {
       FB.init({
         appId: '<%= CoolIo::Application.config.app_id %>',
         status     : true,
         frictionlessRequests : true,
         cookie: true
       });
-      console.log("FACEBOOK KEY", <%= CoolIo::Application.config.app_id %>)
-      console.log("APP INITIALIZED");
-      CoolioApp.checkLoginStatus();
+    console.log("FACEBOOK KEY", <%= CoolIo::Application.config.app_id %>)
+    console.log("APP INITIALIZED");
+    CoolioApp.initialize();
+    CoolioApp.checkLoginStatus();
     }
-});
+  });
 </script>
 
 

@@ -26,10 +26,4 @@
 //= require_self
 
 
-//CoolioApp.usersCollection = new CoolioApp.Collections.Users();
-// CoolioApp.currentUserModel = new CoolioApp.Models.User();
-// CoolioApp.Session = new CoolioApp.Models.Session();
-// new CoolioApp.Router();
-// Backbone.history.start();
-
 

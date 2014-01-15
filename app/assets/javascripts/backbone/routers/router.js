@@ -14,12 +14,14 @@ CoolioApp.Router = Backbone.Router.extend({
   login: function() {
     console.log("LOGIN FUNCTION IN THE ROUTER");
    // this.loadNavView( new CoolioApp.Views.Login() );
+   $(".right a").text("Sign-Up / Login");
    // TODO FIGURE OUT HOW TO PASS THE SESSION INTO THE VIEW
    this.loadView( new CoolioApp.Views.Hello() );
    this.loadNavView( new CoolioApp.Views.NewSession({model: CoolioApp.currentUserModel}) );
   },
 
   displayUserDetails: function(userid) {
+    $(".right a").text("Logout");
     this.loadNavView( new CoolioApp.Views.Logout() );
     this.loadView( new CoolioApp.Views.User({model: CoolioApp.currentUserModel}) );
   },

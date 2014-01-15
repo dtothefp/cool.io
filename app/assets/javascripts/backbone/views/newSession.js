@@ -38,6 +38,7 @@ CoolioApp.Views.NewSession = Backbone.View.extend({
   login: function() {
     FB.login(function(response) {
       if (response.authResponse) {
+        console.log("Response in the login function", response);
         CoolioApp.checkLoginStatus();
       }
     }, {scope: 'email,read_stream,user_photos,friends_likes'} );
@@ -47,10 +48,5 @@ CoolioApp.Views.NewSession = Backbone.View.extend({
     console.log("REDIRECT FROM LISTENER IN THE LOGIN VIEW", this.model.get("id"));
     Backbone.history.navigate("user/" + this.model.get("id"), {trigger: true});
   }
-
-  // requestFriends: function(e) {
-  //   e.preventDefault();
-  //   Backbone.history.navigate( "user/" + CoolioApp.session.get("session_id") + "/friends", {trigger:true});
-  // }
 
 });

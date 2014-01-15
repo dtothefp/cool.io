@@ -21,6 +21,7 @@ CoolioApp.Views.Logout = Backbone.View.extend({
         CoolioApp.Session.destroy({
           success: function(response) {
             // CLEARS THE NAMESPACED SESSION MODEL
+            CoolioApp.Session.clear();
             console.log("SUCCESS CALLBACK FOR SESSION DESTROY");
             Backbone.history.navigate("welcome", {trigger: true});
           }, 

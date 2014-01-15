@@ -9,10 +9,6 @@ var CoolioApp = {
     CoolioApp.Session = new CoolioApp.Models.Session();
     new CoolioApp.Router();
     Backbone.history.start();
-    // CoolioApp.checkLoginStatus();
-    var UserDetails = {
-      
-    }
   }, 
   checkLoginStatus: function() {
     
@@ -24,7 +20,7 @@ var CoolioApp = {
         var tokenExpires = response.authResponse.expiresIn;
         CoolioApp.Session.save({fb_id: response.authResponse.userID, oauth_token: response.authResponse.accessToken, oauth_expires_at: response.authResponse.expiresIn}, {
           success: function(response) {
-            console.log("SESSION ESTABLISHED", response.get("id"));
+            // console.log("SESSION ESTABLISHED", response.get("id"));
             // FETCH THE CURRENT USER DATA
             CoolioApp.currentUserModel.set({id: response.get("id"), oauth_token: token, oauth_expires_at: tokenExpires});
             console.log("CURRENT USER MODEL IN THE CHECK LOGIN FUNCTION", CoolioApp.currentUserModel.attributes);

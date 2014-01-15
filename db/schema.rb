@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140111204227) do
+ActiveRecord::Schema.define(version: 20140115122118) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,9 +53,9 @@ ActiveRecord::Schema.define(version: 20140111204227) do
   create_table "shares", force: true do |t|
     t.integer  "post_id"
     t.integer  "user_id"
-    t.boolean  "author"
-    t.boolean  "liker"
-    t.boolean  "commenter"
+    t.boolean  "author",     default: false
+    t.boolean  "liker",      default: false
+    t.boolean  "commenter",  default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
