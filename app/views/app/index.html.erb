@@ -1,6 +1,8 @@
 <script type="text/html" id="user-details">
   <h1>Welcome  <%%= this.model.get("name") %></h1>
-  <img src="<%%= this.model.get("image_url") %>" alt="facebook profile image">
+  <a href="https://www.facebook.com/<%%= this.model.get("fb_id") %>" target="_blank">
+    <img src="<%%= this.model.get("image_url") %>" alt="facebook profile image">
+  </a>
   <form>
     <button id="get-friends">Find Your Friends</button>
   </form>
@@ -17,7 +19,7 @@
 
 
 <script type="text/html" id="say-hello">
-  <h1>NOT JUST ANOTHER APP FOR F<span id="dirty">IND</span>ING YOUR FRIENDS....YET</h1>
+  <h1>NOT JUST ANOTHER APP FOR F<span id="dirty">IND</span>ING YOUR FRIENDS</h1>
 </script>
 
 
