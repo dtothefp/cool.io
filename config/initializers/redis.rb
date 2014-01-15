@@ -5,4 +5,3 @@ if Rails.env.production?
   Resque.redis = REDIS
 end
 
-# || "redis://localhost:3000/" 
