@@ -4,6 +4,7 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
   initialize: function() {
     // this.listenTo(this.collection, "reset", this.addAll);
     this.listenTo(this.collection, "reset", this.plotData);
+    collection = this.collection;
     console.log("COLLECTION ID INSIDE THE STATUSLIST VIEW", this.collection.id);
     this.collection.fetch({ 
       reset: true,
@@ -122,7 +123,7 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
 
     _.each(gElements[0], function(element){
       if (element.__data__.get("count") === 0) {
-      element.remove();
+        element.remove();
       }
     });
   }
