@@ -3,7 +3,7 @@ class PostAdder
 
   def self.perform(id)
     user = User.find(id)
-    response = JSON.parse HTTParty.get "https://graph.facebook.com/" + user.fb_id + "?fields=photos,posts,statuses,links&access_token=" + user.oauth_token
+    response = JSON.parse(HTTParty.get("https://graph.facebook.com/" + user.fb_id + "?fields=photos,posts,statuses,links&access_token=" + user.oauth_token))
     post_types = { "App" => "posts", "Photo" => "photos", "Status" => "statuses", "Link" => "links"}
     post_types.each do |type, fb_type|
       response[fb_type]["data"].each do |post|
