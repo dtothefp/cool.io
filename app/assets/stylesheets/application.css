@@ -9,6 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require foundation_and_overrides
+ *= require jquery.ui.all
  *= require_self
  *= require_tree .
  */
@@ -160,6 +161,18 @@ width: 250px;
 .friends-list svg {
   position: relative;
   right: 45px;
+}
+
+#user {
+  position: relative;
+  height: 400px;
+}
+
+#message-container {
+  position: absolute;
+  top: 77px;
+  left: 68px;
+  width: 468px;
 }
 
 /********* GRAPH STYLING *********/

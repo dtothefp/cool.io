@@ -10,7 +10,7 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
       reset: true,
       success: function() {
         // Backbone.history.navigate("user/" + CoolioApp.Session.get("session_id"), {trigger:true});
-        console.log("STATUS COLLECTION FETCHED");
+        console.log("STATUS COLLECTION FETCHED", this.collection);
       }, 
       error: function() {
         console.log("STATUS COLLECTION FETCH ERROR");
@@ -31,6 +31,7 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
   },
 
   plotData: function() {
+    console.log("plot data fired");
     //circles = d3.selectAll("circle")
     var h = 800;
     var w = 1060;

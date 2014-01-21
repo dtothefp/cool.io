@@ -15,6 +15,7 @@ gem 'omniauth-facebook'
 gem "rails-erd"
 gem 'zurb-foundation'
 gem 'resque', "~> 1.22.0", :require => "resque/server"
+gem 'jquery-ui-rails'
 
 group :doc do
   gem 'sdoc', require: false

@@ -3,9 +3,16 @@
   <a href="https://www.facebook.com/<%%= this.model.get("fb_id") %>" target="_blank">
     <img src="<%%= this.model.get("image_url") %>" alt="facebook profile image">
   </a>
-  <form>
-    <button id="get-friends">View Interactions</button>
-  </form>
+  <%% if (this.model.get("returning_user")) { %>
+    <form>
+      <button id="get-friends">View Interactions</button>
+    </form>
+  <%% } else { %>
+    <div id="message-container">
+      <h3>You are a new User. Please wait while your Facebook Data is Loaded</h3>
+      <div id="progressbar"></div>
+    </div>
+  <%% } %>
 </script>
 
 <script type="text/html" id="new-session">
