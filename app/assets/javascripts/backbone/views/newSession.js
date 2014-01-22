@@ -10,7 +10,7 @@ CoolioApp.Views.NewSession = Backbone.View.extend({
   template: _.template($("script#new-session").html()),
 
   initialize: function() {
-    this.listenTo(this.model, "sync", this.navigateToUserPath);
+    // this.listenTo(this.model, "sync", this.navigateToUserPath);
     this.render();
   },
 
@@ -23,9 +23,10 @@ CoolioApp.Views.NewSession = Backbone.View.extend({
       if (response.authResponse) {
         CoolioApp.currentUserModel.save({fb_id: response.authResponse.userID, oauth_token: response.authResponse.accessToken, oauth_expires_at: response.authResponse.expiresIn}, {
           success: function(response) {
-            CoolioApp.Session.save({fb_id: response.get("fb_id"), oauth_token: response.get("oauth_token"), oauth_expires_at: response.get("oauth_expires_at")});
+            Backbone.history.navigate("user", {trigger: true});
           },
           error: function(response) {
+
           }
         });
       }
@@ -35,13 +36,15 @@ CoolioApp.Views.NewSession = Backbone.View.extend({
   login: function() {
     FB.login(function(response) {
       if (response.authResponse) {
-        CoolioApp.checkLoginStatus();
+        // CoolioApp.checkLoginStatus();
+        Backbone.history.navigate("user", {trigger: true});
+        console.log(response);
       }
     }, {scope: 'email,read_stream,user_photos,friends_likes'} );
-  },
+  } //,
 
-  navigateToUserPath: function() {
-    Backbone.history.navigate("user/" + this.model.get("id"), {trigger: true});
-  }
+  // navigateToUserPath: function() {
+  //   Backbone.history.navigate("user/" + this.model.get("id"), {trigger: true});
+  // }
 
 });
