@@ -12,7 +12,6 @@ CoolioApp.Router = Backbone.Router.extend({
   // },
 
   login: function() {
-    console.log("LOGIN FUNCTION IN THE ROUTER");
    // this.loadNavView( new CoolioApp.Views.Login() );
    $(".right a").text("Sign-Up / Login");
    // TODO FIGURE OUT HOW TO PASS THE SESSION INTO THE VIEW
@@ -23,13 +22,12 @@ CoolioApp.Router = Backbone.Router.extend({
   displayUserDetails: function(userid) {
     $(".right a").text("Logout");
     this.loadNavView( new CoolioApp.Views.Logout() );
-    this.loadView( new CoolioApp.Views.User({model: CoolioApp.currentUserModel}) );
+    this.loadView( new CoolioApp.Views.User({model: CoolioApp.currentUserModel, modelId: userid}) );
   },
 
   displayFriends: function(userid) {
     this.loadNavView( new CoolioApp.Views.Logout() );
     CoolioApp.Friendships = new CoolioApp.Collections.Friendships({id: userid});
-    console.log("FRIENDSHIPS COLLECTION", CoolioApp.Friendships);
     this.loadView(new CoolioApp.Views.FriendsList({collection: CoolioApp.Friendships}));
   },
 
@@ -39,21 +37,19 @@ CoolioApp.Router = Backbone.Router.extend({
   },
 
   loadingFriends: function(userid) {
-    console.log("LOADING FUNCTION IN ROUTER");
     this.loadView(new CoolioApp.Views.Loading({model: CoolioApp.currentUserModel}));
   },
 
   loadNavView: function(view) {
-    console.log("LOAD NAV VIEW IN THE ROUTER", view.el);
     this.mainNav && this.mainNav.remove();
     this.mainNav = view;
     $("nav li.has-dropdown").append(view.el);
   },
 
   loadView: function(view) {
-    console.log("LOAD VIEW IN THE ROUTER", view.el);
     this.main && this.main.remove();
     this.main = view;
     $("body").append(view.el);
   }
+
 });

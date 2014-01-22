@@ -15,8 +15,8 @@ class SessionsController < ApplicationController
       #TODO update access token
       User.update_access_token(params[:fb_id], params[:oauth_token], params[:oauth_expires_at])
     end
-    
-  render json: {id: @user.id}
+  
+  render json: {id: @user.id, returning_user: @user.returning_user}
 
  end
 

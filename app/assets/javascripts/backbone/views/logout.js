@@ -22,11 +22,9 @@ CoolioApp.Views.Logout = Backbone.View.extend({
           success: function(response) {
             // CLEARS THE NAMESPACED SESSION MODEL
             CoolioApp.Session.clear();
-            console.log("SUCCESS CALLBACK FOR SESSION DESTROY");
             Backbone.history.navigate("welcome", {trigger: true});
           }, 
           error: function(response) {
-            console.log("ERROR CALLBACK FOR SESSION DESTROY");
           }
         });
       };
@@ -35,7 +33,6 @@ CoolioApp.Views.Logout = Backbone.View.extend({
 
   render: function() {
     this.$el.html(this.template());
-    console.log("logout render logout-view");
   }
 
 });
