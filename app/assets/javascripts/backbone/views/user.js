@@ -1,29 +1,14 @@
-_.extend(Backbone.View.prototype, Backbone.Events, {
-   render: function() {
-      //console.log('This is a test');
-    this.mynewevent();
-    return this;
-   },
-   myrender: function() {
-      console.log('Pre-render work');
-      this.render();
-   },
-   mynewevent: function() {
-      var event = new Event('rendered');
-      this.addEventListener('build', this.createProgressBar);
-      this.dispatchEvent(event);
-   }
-});
-
 CoolioApp.Views.User = Backbone.View.extend({
   id: "user",
 
   template: _.template($("script#user-details").html()),
 
   initialize: function() {
-    this.listenTo(this.model, "change", this.render);
+    this.listenTo(this.model, "sync", this.render);
     this.listenTo(this.model, "sync", this.createProgressBar);
-    this.render();
+    if (this.model.get("id")) {
+      this.render();
+    }
   },
 
   events: {
@@ -42,7 +27,7 @@ CoolioApp.Views.User = Backbone.View.extend({
   }, 
 
   createProgressBar: function() {
-        console.log("create progressbar");
+    console.log("create progressbar");
      var self = this;
     if (!this.model.get("returning_user")) {
       var progressBar = $('#progressbar'), width = 2;
@@ -54,12 +39,9 @@ CoolioApp.Views.User = Backbone.View.extend({
               width += 1;
               progressBarWidth.css('width', width + '%');
               if (width >= 100) {
+                console.log("width exceeds");
                 clearInterval(interval);
-                progressBar.progressbar({
-                  value: false,
-                  create: function() {
-                    console.log("create function");
-                    self.model.save({"returning_user": true}, {
+                self.model.save({"returning_user": true}, {
                       success: function(response) {
                         console.log("returning user", self.model.get("returning_user"));
                       }, 
@@ -67,7 +49,8 @@ CoolioApp.Views.User = Backbone.View.extend({
 
                       }
                     });
-                  }
+                progressBar.progressbar({
+                  value: false
                 });
               }
           }, 100);
