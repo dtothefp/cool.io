@@ -1,19 +1,38 @@
 CoolioApp.Views.FriendsList = Backbone.View.extend({
   className: "friends-list",
 
+  template: _.template($("script#friends-svg").html()),
+
   initialize: function() {
     // this.listenTo(this.collection, "reset", this.addAll);
-    this.listenTo(this.collection, "sync", this.plotData);
-    collection = this.collection;
+    model = this.model;
+    this.listenTo(this.model, "sync", this.render);
+    this.listenTo(this.collection, "reset", this.plotData);
+    console.log("model in friendships", this.model);
+    if (this.model.get("id")) {
+      console.log("id render");
+      this.render();
+    }
+    var self = this;
     this.collection.fetch({ 
       reset: true,
       success: function() {
-        // Backbone.history.navigate("user/" + CoolioApp.Session.get("session_id"), {trigger:true});
+        console.log("friendship collection fetched");
       }, 
       error: function() {
+        console.log("friendship collection fetch error");
         // Backbone.history.navigate("user/" + this.collection.id + "/loading", {trigger:true});
       } 
     });
+  },
+
+  render: function() {
+    // this.$el.html(this.template());
+    if(this.model.get("returning_user")) {
+      this.$el.html("<svg></svg>");
+    } else {
+      this.$el.html("<div id='message-container'><h3>You are a new User. Please wait while your Facebook Data is Loaded</h3><div id='progressbar'></div></div>");
+    }
   },
 
   addAll: function() {
@@ -26,12 +45,35 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
     this.$el.append(view.el);
   },
 
+  createProgressBar: function() {
+    console.log("create progressbar");
+    var self = this;
+    var progressBar = $('#progressbar'), width = 2;
+    progressBar.progressbar({
+      value: 1, 
+      create: function() {
+        var progressBarWidth = $(".ui-progressbar-value");
+        var interval = setInterval(function() {
+            width += 1;
+            progressBarWidth.css('width', width + '%');
+            if (width >= 100) {
+              console.log("width exceeds");
+              clearInterval(interval);
+              progressBar.progressbar({
+                value: false
+              });
+            }
+        }, 100);
+      }
+    });
+  },
+
   plotData: function() {
+    console.log("plotData function");
     var h = 800;
     var w = 1060;
 
-    var svg = d3.select(this.el)
-            .append("svg")
+    var svg = d3.select("svg")
             .attr("width", w)
             .attr("height", h)
             .attr("fill", "rgba(0, 0, 255, 0.75)");

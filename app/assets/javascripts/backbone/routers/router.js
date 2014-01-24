@@ -36,8 +36,11 @@ CoolioApp.Router = Backbone.Router.extend({
 
   displayFriends: function(userid) {
     this.loadNavView( new CoolioApp.Views.Logout() );
-    CoolioApp.Friendships = new CoolioApp.Collections.Friendships({id: userid});
-    this.loadView(new CoolioApp.Views.FriendsList({collection: CoolioApp.Friendships}));
+    this.collection = new CoolioApp.Collections.Friendships({id: userid});
+    this.loadView(new CoolioApp.Views.FriendsList({collection: this.collection, model: this.model}));
+    if(!this.model.get("returning_user")) {
+      this.createProgressBar();
+    }
   },
 
   loadNavView: function(view) {
@@ -47,10 +50,45 @@ CoolioApp.Router = Backbone.Router.extend({
   },
 
   loadView: function(view) {
+    console.log("load view");
     this.main && this.main.remove();
     this.main = view;
     $("body").append(view.el);
   }, 
+
+  createProgressBar: function() {
+    console.log("collection", this.collection);
+    console.log("create progressbar");
+    var self = this;
+    var progressBar = $('#progressbar'), width = 2;
+    progressBar.progressbar({
+      value: 1, 
+      create: function() {
+        var progressBarWidth = $(".ui-progressbar-value");
+        var interval = setInterval(function() {
+            width += 2;
+            progressBarWidth.css('width', width + '%');
+            if (width >= 100) {
+              console.log("width exceeds");
+              clearInterval(interval);
+              progressBar.progressbar({
+                value: false
+              });
+              self.model.save({"returning_user": true}, {
+                success: function(response) {
+                  console.log("self collection", self.collection);
+                  console.log("this collection", this.collection);
+                  self.collection.fetch({reset: true});
+                }, 
+                error: function(response) {
+
+              }
+          });
+            }
+        }, 1000);
+      }
+    });
+  },
 
   checkLoginStatus: function() {
     var self = this;

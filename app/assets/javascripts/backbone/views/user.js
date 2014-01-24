@@ -5,8 +5,8 @@ CoolioApp.Views.User = Backbone.View.extend({
 
   initialize: function() {
     this.listenTo(this.model, "sync", this.render);
-    this.listenTo(this.model, "sync", this.createProgressBar);
     if (this.model.get("id")) {
+      console.log("id render");
       this.render();
     }
   },
@@ -18,7 +18,9 @@ CoolioApp.Views.User = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template());
     console.log("returning user", this.model.get("returning_user"));
-    this.createProgressBar();
+    // if (!this.model.get("returning_user")) {
+    //   this.createProgressBar();
+    // }
   },
 
   findFriends: function(e) {
@@ -28,35 +30,33 @@ CoolioApp.Views.User = Backbone.View.extend({
 
   createProgressBar: function() {
     console.log("create progressbar");
-     var self = this;
-    if (!this.model.get("returning_user")) {
-      var progressBar = $('#progressbar'), width = 2;
-      progressBar.progressbar({
-        value: 1, 
-        create: function() {
-          var progressBarWidth = $(".ui-progressbar-value");
-          var interval = setInterval(function() {
-              width += 1;
-              progressBarWidth.css('width', width + '%');
-              if (width >= 100) {
-                console.log("width exceeds");
-                clearInterval(interval);
-                self.model.save({"returning_user": true}, {
-                      success: function(response) {
-                        console.log("returning user", self.model.get("returning_user"));
-                      }, 
-                      error: function(response) {
+    var self = this;
+    var progressBar = $('#progressbar'), width = 2;
+    progressBar.progressbar({
+      value: 1, 
+      create: function() {
+        var progressBarWidth = $(".ui-progressbar-value");
+        var interval = setInterval(function() {
+            width += 1;
+            progressBarWidth.css('width', width + '%');
+            if (width >= 100) {
+              console.log("width exceeds");
+              clearInterval(interval);
+              // self.model.save({"returning_user": true}, {
+              //       success: function(response) {
+              //         console.log("returning user", self.model.get("returning_user"));
+              //       }, 
+              //       error: function(response) {
 
-                      }
-                    });
-                progressBar.progressbar({
-                  value: false
-                });
-              }
-          }, 100);
-        }
-      });
-    }
+              //       }
+              //     });
+              progressBar.progressbar({
+                value: false
+              });
+            }
+        }, 100);
+      }
+    });
   }
 
 });

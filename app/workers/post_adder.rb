@@ -12,6 +12,7 @@ class PostAdder
         Resque.enqueue(LikeAdder, post, post_instance.id)
       end
     end
+    # test = Proc.new{puts "count adder complete"}
     Resque.enqueue(CountAdder, id)
   end
 

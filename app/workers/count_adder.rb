@@ -21,5 +21,7 @@ class CountAdder
       friend = user.friends.find(user_id)
       friend.update(count: count)
     end
+
+    # completed.call
   end
 end
