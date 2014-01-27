@@ -2,7 +2,9 @@
 
 ######Description
 
-- Cool.io is an application that gives the user a graphical tally of how many times each of their friends have liked or commented on their Facebook wall posts, links, photos, and status updates.  
+- Cool.io is an application that gives the user a graphical tally of how many times each of their friends have liked or commented on their Facebook wall posts, links, photos, and status updates.
+
+[http://cool-io.herokuapp.com](http://cool-io.herokuapp.com/)
 
 ######Technologies Implemented
 - Rails/Active Record/PostgreSQL
