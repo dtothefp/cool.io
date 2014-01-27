@@ -22,7 +22,8 @@
 
 - A couple interesting SQL commands mixed into active record, and then some Ruby iterations tally the like/comment counts from the Shares table.  
 
-```result = ActiveRecord::Base.connection.execute("SELECT post_id FROM shares WHERE user_id = #{user.id} AND author = true")
+```bash
+result = ActiveRecord::Base.connection.execute("SELECT post_id FROM shares WHERE user_id = #{user.id} AND author = true")
 processed_result = result.map do |post|
   ActiveRecord::Base.connection.execute("SELECT user_id, COUNT(user_id) FROM shares WHERE post_id = #{post["post_id"]} AND (commenter = true OR liker = true) AND (user_id != #{user.id}) GROUP BY user_id;")
 end
