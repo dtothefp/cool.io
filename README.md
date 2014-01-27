@@ -10,7 +10,7 @@
 - Facebook JavaScript SDK and Open Graph API
 - Redis/resque
 
-![image](https://lh5.googleusercontent.com/-AcK6eAYiJF8/Uqy2rIgvE3I/AAAAAAAABNo/ng5clqvDF58/w783-h554-no/IMG_20https://dl.dropboxusercontent.com/u/8073874/Screen%20Shot%202014-01-27%20at%2010.36.30%20AM.png)
+![image](https://dl.dropboxusercontent.com/u/8073874/Screen%20Shot%202014-01-27%20at%2010.36.30%20AM.png)
 
 ######ERD & Brief Technical Overview
 
