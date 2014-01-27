@@ -28,7 +28,9 @@ processed_result = result.map do |post|
   ActiveRecord::Base.connection.execute("SELECT user_id, COUNT(user_id) FROM shares WHERE post_id = #{post["post_id"]} AND (commenter = true OR liker = true) AND (user_id != #{user.id}) GROUP BY user_id;")
 end
 ```
-- The resulting tallied count is then stored in the Users table, and this table is synced with the Friendships collection in Backbone.  The collection is then used as data in D3, iterated over and associated with various SVG elements.  This is a very interesting model because each SVG element now contains all of the data from each Postgres entry.  
+- The resulting tallied count is then stored in the Users table, and this table is synced with the Friendships collection in Backbone.  The collection is then used as data in D3, iterated over and associated with various SVG elements.  This is a very interesting model because each SVG element now contains all of the data from each Postgres entry.
+
+- As soon as a user logs, a chain reaction of Resque methods activates worker queues utilizing the Redis server.  These workers process in the background the database associations of a user's friends, the user's posts, the relationship of the posts to the users, and the tallying of post like/comment count. 
 
 ######Plans for the Future
 
