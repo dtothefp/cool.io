@@ -8,6 +8,7 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
     model = this.model;
     this.listenTo(this.model, "sync", this.render);
     this.listenTo(this.collection, "reset", this.plotData);
+    collection = this.collection;
     console.log("model in friendships", this.model);
     if (this.model.get("id")) {
       console.log("id render");
