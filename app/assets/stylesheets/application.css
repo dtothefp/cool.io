@@ -179,7 +179,7 @@ width: 250px;
 
 .axis path,
 .axis line {
-    fill: none;
+    /*fill: none;*/
     stroke: black;
     shape-rendering: crispEdges;
 }
