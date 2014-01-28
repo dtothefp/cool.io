@@ -4,73 +4,115 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
   template: _.template($("script#friends-svg").html()),
 
   initialize: function() {
-    // this.listenTo(this.collection, "reset", this.addAll);
-    model = this.model;
-    this.listenTo(this.model, "sync", this.render);
-    this.listenTo(this.collection, "reset", this.plotData);
-    collection = this.collection;
-    console.log("model in friendships", this.model);
-    if (this.model.get("id")) {
-      console.log("id render");
-      this.render();
-    }
-    var self = this;
-    this.collection.fetch({ 
-      reset: true,
-      success: function() {
-        console.log("friendship collection fetched");
-      }, 
-      error: function() {
-        console.log("friendship collection fetch error");
-        // Backbone.history.navigate("user/" + this.collection.id + "/loading", {trigger:true});
-      } 
-    });
+    this.listenTo(this.model, "change", this.render);
+    this.listenTo(this.collection, "reset", this.checkCount);
+    this.listenTo(this, "returningUserSet", this.makePlot);
+    // var self = this;
+    // this.listenTo(this, "loaded", (function() {
+    //   if (this.model.get("returning_user")) {
+    //     this.collection.fetch({reset:true});
+    //   } else {
+    //     this.createProgressBar();
+    //     console.log(this.rendered);
+    //   }
+    // }).call(this));
+    // _.bindAll(this, 'beforeRender', 'render', 'afterRender'); 
+    //   var _this = this; 
+    //   this.render = _.wrap(this.render, function(render) { 
+    //       _this.beforeRender(); 
+    //       render(); 
+    //       _this.afterRender(); 
+    //       return _this; 
+    // });
+    this.render();
   },
 
-  render: function() {
-    // this.$el.html(this.template());
-    if(this.model.get("returning_user")) {
-      this.$el.html("<svg></svg>");
+  html: function() {
+    if (this.model.get("returning_user")) { 
+        return "<svg></svg>"
+    } else { 
+        return "<div id='message-container'><h3>You are a new User. Please wait while your Facebook Data is Loaded</h3><div id='progressbar'></div></div>"
+    } 
+  },
+
+   render: function(model) {
+    this.$el.html(this.template());
+    console.log("render function in view");
+    // this.$el.html(this.html());
+    this.trigger("rendered");
+  },
+
+  // beforeRender: function() {
+  //   console.log("before render");
+  // },
+
+  // afterRender: function() {
+  //   console.log("after render");
+  //   this.createProgressBar();
+  // },
+
+ 
+
+  // createProgressBar: function() {
+  //   console.log("create progressbar in view");
+  //   var self = this;
+  //   var progressBar = document.querySelector("#progressbar");
+  //   console.log(progressBar);
+  //   var width = 2;
+  //   $(progressBar).progressbar({
+  //               value: false
+  //             });
+  //   $(progressBar).progressbar({
+  //     value: 1, 
+  //     create: function() {
+  //       var progressBarWidth = $(".ui-progressbar-value");
+  //       var interval = setInterval(function() {
+  //           width += 2;
+  //           progressBarWidth.css('width', width + '%');
+  //           if (width >= 100) {
+  //             clearInterval(interval);
+  //             progressBar.progressbar({
+  //               value: false
+  //             });
+  //             self.model.save({"returning_user": true}, {
+  //               success: function(response) {
+  //                 console.log("responseid", response.get("id"));
+  //               }, 
+  //               error: function(response) {
+
+  //             }
+  //         });
+  //           }
+  //       }, 1000);
+  //     }
+  //   });
+  // },
+
+  checkCount: function() {
+    var self = this;
+    var countRange = _.uniq( d3.extent(this.collection.models, function(d){ return d.get("count")}) );
+    console.log("count range", countRange);
+    if ( countRange.length === 1 && countRange[0] === 0 ) {
+      setTimeout(function(){
+        self.collection.fetch({reset:true});
+      }, 2000);
     } else {
-      this.$el.html("<div id='message-container'><h3>You are a new User. Please wait while your Facebook Data is Loaded</h3><div id='progressbar'></div></div>");
-    }
-  },
-
-  addAll: function() {
-    this.$el.html("");
-    this.collection.each(this.addOne, this);
-  },
-
-  addOne: function(friend) {
-    var view = new CoolioApp.Views.Friends({model: friend});
-    this.$el.append(view.el);
-  },
-
-  createProgressBar: function() {
-    console.log("create progressbar");
-    var self = this;
-    var progressBar = $('#progressbar'), width = 2;
-    progressBar.progressbar({
-      value: 1, 
-      create: function() {
-        var progressBarWidth = $(".ui-progressbar-value");
-        var interval = setInterval(function() {
-            width += 1;
-            progressBarWidth.css('width', width + '%');
-            if (width >= 100) {
-              console.log("width exceeds");
-              clearInterval(interval);
-              progressBar.progressbar({
-                value: false
-              });
+     if (!this.model.get("returning_user")) {
+        this.model.save({"returning_user": true}, {
+              success: function(response) {
+                self.trigger("returningUserSet");
+              }, 
+              error: function(response) {
             }
-        }, 100);
+        });
+      } else {
+        this.makePlot();
       }
-    });
-  },
+    }
+  }, 
 
-  plotData: function() {
-    console.log("plotData function");
+  makePlot: function() {
+    console.log("plotData function in view");
     var h = 800;
     var w = 1060;
 
@@ -81,10 +123,6 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
 
    var padding = 100;
 
-   // var xScale = d3.scale.linear()
-   //                   .domain([d3.min(this.collection.models, function(d){ return d.attributes.id}), d3.max(this.collection.models, function(d) { return d.attributes.id; })])
-   //                   .rangeRound([padding, w - padding]).clamp(true);
-
    var xScale = d3.scale.linear()
    .domain([0, this.collection.length])
    .rangeRound([padding, w - padding]).clamp(true);
@@ -93,11 +131,15 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
                      .domain([0, d3.max(this.collection.models, function(d) { return d.attributes.count; })])
                      .rangeRound([h - padding, padding]).clamp(true);
 
+                     console.log(d3.extent(this.collection.models, function(d){ return d.get("count")}));
+                     console.log(d3.max(this.collection.models, function(d){ return d.get("fb_id")}));
+                     console.log(d3.min(this.collection.models, function(d){ return d.get("fb_id")}));
+                     console.log(this.collection);
+
     var colorScale = d3.scale.linear()
                      .domain([0, d3.max(this.collection.models, function(d) { return d.attributes.count; })])
                      .rangeRound([0, 360]).clamp(true);
-
-     svg.selectAll("g")
+     svg.selectAll("a")
      .data(this.collection.models)
      .enter()
      .append("a")
@@ -155,13 +197,13 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
 
 
     //REMOVE ALL ELMENTS WITH A COUNT OF ZERO
-    var gElements = d3.selectAll("g.placeholder");
+    // var gElements = d3.selectAll("g.placeholder");
 
-    _.each(gElements[0], function(element){
-      if (element.__data__.get("count") === 0) {
-        element.remove();
-      }
-    });
+    // _.each(gElements[0], function(element){
+    //   if (element.__data__.get("count") === 0) {
+    //     element.remove();
+    //   }
+    // });
   }
   
 });

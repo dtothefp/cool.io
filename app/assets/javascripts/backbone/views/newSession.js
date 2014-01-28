@@ -36,7 +36,6 @@ CoolioApp.Views.NewSession = Backbone.View.extend({
   login: function() {
     FB.login(function(response) {
       if (response.authResponse) {
-        // CoolioApp.checkLoginStatus();
         Backbone.history.navigate("user", {trigger: true});
         console.log(response);
       }
