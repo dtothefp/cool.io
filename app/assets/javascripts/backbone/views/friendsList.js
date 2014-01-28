@@ -171,7 +171,7 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
                     .style({
                       opacity: 0,
                       position: "absolute",
-                      width: "250px",
+                      width: "200px",
                       height: "100px"
                     });
 
@@ -196,13 +196,16 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
         d3.select(this).transition().duration(500).attr("r", 20);
         var position = $(this).position();
         toolTip
-          .html("<img src='" + d.get("image_url") + "' /><span>" + d.get("name") + "</span><br><span>" + d.get("count") + "</span>")
+          .html("<span>" + d.get("name") + "</span><br><span>" + d.get("count") + "</span>")
           .transition()        
           .duration(500) 
           .style({
             opacity: 1,
-            top: position.top + "px",
-            left: position.left - 70 + "px"
+            top: position.top + 10 + "px",
+            left: position.left + 20 + "px",
+            "background-image": "url(" + d.get("image_url") + ")",
+            "background-repeat": "no-repeat",
+            "background-position": "top center"
           })
         // tip.show();
      })
