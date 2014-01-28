@@ -237,6 +237,7 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
 
     // REMOVE TEXT FROM X AXIS
     d3.selectAll(".x text").remove();
+    d3.selectAll(".x .tick").remove();
 
 
     //REMOVE ALL ELMENTS WITH A COUNT OF ZERO
