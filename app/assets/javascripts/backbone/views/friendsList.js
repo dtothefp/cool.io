@@ -202,7 +202,7 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
           .style({
             opacity: 1,
             top: position.top + 10 + "px",
-            left: position.left + 20 + "px",
+            left: (position.left + 70)  + "px",
             "background-image": "url(" + d.get("image_url") + ")",
             "background-repeat": "no-repeat",
             "background-position": "top center"
