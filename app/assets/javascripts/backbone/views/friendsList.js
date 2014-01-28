@@ -123,26 +123,31 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
 
    var padding = 100;
 
+   this.newCollection = [];
+   var self = this;
+   _.each(this.collection.models, function(model){
+              if (model.get("count") !== 0) {
+                this.newCollection.push(model);
+              }
+          }, this);
+
    var xScale = d3.scale.linear()
-   .domain([0, this.collection.length])
-   .rangeRound([padding, w - padding]).clamp(true);
+                     .domain([0, this.newCollection.length])
+                     .rangeRound([padding, w - padding]).clamp(true);
 
    var yScale = d3.scale.linear()
-                     .domain([0, d3.max(this.collection.models, function(d) { return d.attributes.count; })])
+                     .domain([0, d3.max(this.newCollection, function(d) { return d.attributes.count; })])
                      .rangeRound([h - padding, padding]).clamp(true);
 
-                     console.log(d3.extent(this.collection.models, function(d){ return d.get("count")}));
-                     console.log(d3.max(this.collection.models, function(d){ return d.get("fb_id")}));
-                     console.log(d3.min(this.collection.models, function(d){ return d.get("fb_id")}));
-                     console.log(this.collection);
-
     var colorScale = d3.scale.linear()
-                     .domain([0, d3.max(this.collection.models, function(d) { return d.attributes.count; })])
+                     .domain([0, d3.max(this.newCollection, function(d) { return d.attributes.count; })])
                      .rangeRound([0, 360]).clamp(true);
-     svg.selectAll("a")
-     .data(this.collection.models)
+
+    svg.selectAll("a")
+     .data(this.newCollection)
      .enter()
      .append("a")
+     // .filter(function(d){ return d.get("count") !== 0})
      .attr("xlink:href", function(d){
       return "https://www.facebook.com/" + d.get("fb_id");
      })
