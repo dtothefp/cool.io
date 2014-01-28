@@ -39,9 +39,18 @@ CoolioApp.Router = Backbone.Router.extend({
         this.createProgressBar();
       } else {
         this.collection.fetch({reset:true});
+        console.log("loaded event in router fetching collection");
         console.log(this);
       }
     }).call(this));
+    // this.listenTo(this.model, "currentUserFetched", (function(){
+    //   if(!this.model.get("returning_user")) {
+    //     this.createProgressBar();
+    //   } else {
+    //     this.collection.fetch({reset:true});
+    //     console.log(this);
+    //   }
+    // }).call(this));
   },
 
   loadNavView: function(view) {
@@ -51,6 +60,10 @@ CoolioApp.Router = Backbone.Router.extend({
   },
 
   loadView: function(view) {
+    var tooltip = document.querySelector(".d3-tip");
+    if( tooltip ) {
+      $(tooltip).remove();
+    }
     this.main && this.main.remove();
     this.main = view;
     $("body").append(view.el);
@@ -79,97 +92,6 @@ CoolioApp.Router = Backbone.Router.extend({
     });
   },
 
-  plotData: function() {
-    console.log("plotData function in router");
-    var h = 800;
-    var w = 1060;
-
-    var svg = d3.select("svg")
-            .attr("width", w)
-            .attr("height", h)
-            .attr("fill", "rgba(0, 0, 255, 0.75)");
-
-   var padding = 100;
-
-   var xScale = d3.scale.linear()
-   .domain([0, this.collection.length])
-   .rangeRound([padding, w - padding]).clamp(true);
-
-   var yScale = d3.scale.linear()
-                     .domain([0, d3.max(this.collection.models, function(d) { return d.attributes.count; })])
-                     .rangeRound([h - padding, padding]).clamp(true);
-
-    var colorScale = d3.scale.linear()
-                     .domain([0, d3.max(this.collection.models, function(d) { return d.attributes.count; })])
-                     .rangeRound([0, 360]).clamp(true);
-
-     svg.selectAll("g")
-     .data(this.collection.models)
-     .enter()
-     .append("a")
-     .attr("xlink:href", function(d){
-      return "https://www.facebook.com/" + d.get("fb_id");
-     })
-     .attr("target", "_blank")
-     .append("g")
-     .attr("class", "placeholder")
-     .on("mouseover", function(d){
-        d3.select(this).append("image").attr("width", 0).attr("height", 0).transition().duration(500).attr("width", 75).attr("height", 75).attr("xlink:href", d.get("image_url") ).attr("x", 25);
-        d3.select(this).append("text").attr("fill", "white").attr("font-size", 20).attr("y", -60).append("tspan").text( d.get("name") ).attr("x", 0).attr("dy", "1.2em");
-        d3.select("text").append("tspan").text("Count: " + d.get("count")).attr("x", 20).attr("dy", "1.2em");
-     })
-     .on("mouseout", function(d){
-        d3.select("g image").remove();
-        d3.select("g text").remove();
-     })
-     .attr("transform", function(d, i) { return "translate(" + xScale(i) + "," + yScale(d.get("count")) + ")"; })
-     .append("circle")
-     .attr("r", function(d){return d.get("count") !== 0 ? (d.get("count") * 2) : 3})
-     .attr("fill", function(d) {
-      return "hsla(" + colorScale(d.get("count")) + ", 100%, 50%, .7)"
-     })
-     .on("mouseover", function(d){
-        d3.select(this).transition().duration(500).attr("r", 20);
-     })
-     .on("mouseout", function(d){
-        d3.select(this).transition().duration(500).attr("r", d.get("count") !== 0 ? (d.get("count") * 2) : 3);
-     });
-    
-    // CREATE THE X AND Y AXIS
-    var yAxis = d3.svg.axis()
-                      .scale(yScale)
-                      .orient("left")
-                      .ticks(5);
-
-    svg.append("g")
-      .attr("class", "axis y")
-      .attr("transform", "translate(" + padding + ",0)")
-      .call(yAxis);
-
-    var xAxis = d3.svg.axis()
-                    .scale(xScale)
-                    .orient("bottom")
-                    .ticks(5);
-
-    svg.append("g")
-      .attr("class", "axis x")
-      .attr("transform", "translate(0," + (h - padding) + ")")
-      .call(xAxis);
-
-    // REMOVE TEXT FROM X AXIS
-    d3.selectAll(".x text").remove();
-
-
-    //REMOVE ALL ELMENTS WITH A COUNT OF ZERO
-    var gElements = d3.selectAll("g.placeholder");
-
-    _.each(gElements[0], function(element){
-      if (element.__data__.get("count") === 0) {
-        element.remove();
-      }
-    });
-  },
-
   checkLoginStatus: function() {
     var self = this;
     FB.getLoginStatus(function(response) {
@@ -185,6 +107,7 @@ CoolioApp.Router = Backbone.Router.extend({
               success: function(response) {
                 // console.log("route", route);
                 console.log("user fetched", self.model);
+                self.model.trigger("currentUserFetched");
                 Backbone.history.navigate("user/" + self.model.get("id"), {trigger: true});
               },
               error: function(response) {

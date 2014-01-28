@@ -17,6 +17,7 @@
 //= require foundation
 //= require turbolinks
 //= require d3
+//= require d3-tip
 //= require underscore
 //= require backbone
 //= require main
