@@ -193,7 +193,7 @@ CoolioApp.Views.FriendsList = Backbone.View.extend({
       return color(d.get("count"));
      })
      .on("mouseover", function(d, i){
-        d3.select(this).transition().duration(500).attr("r", 20);
+        d3.select(this).transition().duration(500).attr("r", function(d){ return (d.get("count") * 30)/d.get("count")});
         var position = $(this).position();
         toolTip
           .html("<span>" + d.get("name") + "</span><br><span>" + d.get("count") + "</span>")
