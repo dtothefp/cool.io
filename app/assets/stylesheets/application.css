@@ -215,7 +215,7 @@ width: 205px!important;
 .d3-tip {
   line-height: 1;
   font-weight: bold;
-  padding: 12px;
+ /* padding: 12px;*/
   color: #fff;
   border-radius: 2px;
   text-align: center;
