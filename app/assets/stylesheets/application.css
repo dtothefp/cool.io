@@ -30,12 +30,24 @@ body {
   font-family: 'brushed';
 }
 
+nav .inner-container {
+  overflow: hidden;
+  float: left!important: 
+}
+
+nav .right-nav-container {
+  float: right;
+}
+
+.right-nav-container li {
+  display: inline-block;
+}
+
 
 #sign_in {
-  background: url('http://www.videoaround.com/images/facebook-login-button.png') no-repeat center center;
-  height: 50px;
-  display: block;
-  width: 250px;
+/*  background: url('http://www.videoaround.com/images/facebook-login-button.png') no-repeat center center;
+*/  height: 50px;
+  /*width: 250px;*/
 }
 
 div#hello {
@@ -69,18 +81,22 @@ div#hello h1 {
   top: 316px;
 }
 
-#sign_up {
-  background: url('http://www.slimkicker.com/img/sign-up-facebook.png') no-repeat center center;
-  height: 50px;
-  display: block;
-  width: 250px;
+.dropdown img {
+  width: 165px;
+  padding: 10px;
 }
 
-#sign_out {
-background: url('https://save.ca/img/logout_FB.png') no-repeat center center;
+#sign_up {
+ /* background: url('http://www.slimkicker.com/img/sign-up-facebook.png') no-repeat center center;*/
+  height: 50px;
+ /* width: 250px;*/
+}
+
+#sign_out img {
+/*background: url('https://save.ca/img/logout_FB.png') no-repeat center center;*/
 height: 50px;
 display: block;
-width: 250px;
+width: 205px!important;
 }
 
 #sign_in, #sign_up, #sign_out {
